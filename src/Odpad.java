@@ -42,31 +42,31 @@ public class Odpad {
         switch(this.wylosowanyNumer){
 
             case 1:
-                smiecImagePath="C:\\Users\\Kasia\\IdeaProjects\\Detrasher\\src\\ButelkaPET.png";
+                smiecImagePath="src/ButelkaPET.png";
                 break;
             case 2:
-                smiecImagePath="C:\\Users\\Kasia\\IdeaProjects\\Detrasher\\src\\PuszkaPoNapoju.png";
+                smiecImagePath="src/PuszkaPoNapoju.png";
                 break;
             case 3:
-                smiecImagePath="C:\\Users\\Kasia\\IdeaProjects\\Detrasher\\src\\ButelkaPoMleku.png";
+                smiecImagePath="src/ButelkaPoMleku.png";
                 break;
             case 4:
-                smiecImagePath="C:\\Users\\Kasia\\IdeaProjects\\Detrasher\\src\\ButelkaPoPranie.png";
+                smiecImagePath="src/ButelkaPoPranie.png";
                 break;
             case 5:
-                smiecImagePath="C:\\Users\\Kasia\\IdeaProjects\\Detrasher\\src\\Gazety.png";
+                smiecImagePath="src/Gazety.png";
                 break;
             case 6:
-                smiecImagePath="C:\\Users\\Kasia\\IdeaProjects\\Detrasher\\src\\MetalowaPuszka2.png";
+                smiecImagePath="src/MetalowaPuszka2.png";
                 break;
             case 7:
-                smiecImagePath="C:\\Users\\Kasia\\IdeaProjects\\Detrasher\\src\\PapierowaTorba.png";
+                smiecImagePath="src/PapierowaTorba.png";
                 break;
             case 8:
-                smiecImagePath="C:\\Users\\Kasia\\IdeaProjects\\Detrasher\\src\\PuszkaPoSprayu.png";
+                smiecImagePath="src/PuszkaPoSprayu.png";
                 break;
             case 0:
-                smiecImagePath="C:\\Users\\Kasia\\IdeaProjects\\Detrasher\\src\\PękniętyKubek.png";
+                smiecImagePath="src/PękniętyKubek.png";
                 break;
             default:
                 smiecImagePath="";

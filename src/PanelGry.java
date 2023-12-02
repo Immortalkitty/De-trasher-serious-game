@@ -66,7 +66,7 @@ public class PanelGry extends JPanel {
 
         try
         {
-            tloImage = ImageIO.read(new File("C:\\Users\\Kasia\\IdeaProjects\\Detrasher\\src\\Tło-detrasher.jpg"));
+            tloImage = ImageIO.read(new File("src/Tło-detrasher.jpg"));
         }
         catch (IOException e)
         {
