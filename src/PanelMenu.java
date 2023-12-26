@@ -8,7 +8,7 @@ public class PanelMenu extends JPanel {
     private JPanel PanelSzans;
     public JButton menuPrzycisk;
     private JLabel punktacjaLabel;
-    private JLabel szanseLabel;
+    public JLabel szanseLabel;
     private Timer timerMenu;
     private int interwałMenu;
 

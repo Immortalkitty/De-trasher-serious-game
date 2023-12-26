@@ -16,11 +16,13 @@ public class PanelGry extends JPanel {
     private BufferedImage smiecImage = null;
     private BufferedImage tloImage = null;
     private int poprzedniIndeksPrzyspieszenia=0;
+    private int k;
 
 
 
     private void initUIPoleGry()
     {
+        k=1;
         setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
         setMaximumSize(new Dimension(1000, 700));
         setMinimumSize(new Dimension(1000, 700));
@@ -108,14 +110,23 @@ public class PanelGry extends JPanel {
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        rysuj(g);
+        rysuj(g,k);
     }
 
-    private void rysuj(Graphics g)
+    private void rysuj(Graphics g,int k)
     {
         g.drawImage(tloImage, 0, 0, null);
 
         g.drawImage(smiecImage, curOdpad.getX(),curOdpad.getY(), null);
+
+        if (k==0)
+        {
+            String s="Koniec Gry";
+            g.setFont(new Font("serif", Font.BOLD, 60));
+            g.setColor(Color.RED);
+            g.drawString(s, getWidth() / 2 - g.getFontMetrics().stringWidth(s) / 2,
+                    getHeight() / 2 - g.getFontMetrics().getHeight() / 2);
+        }
     }
 
     public boolean sprobujRuszyc(int newX, int newY)
@@ -149,7 +160,11 @@ public class PanelGry extends JPanel {
 
     private void koniecGry()
     {
-        System.out.println("Koniec gry");
+        czyPausa=true;
+        k=0;
+        repaint();
+
+
     }
     private void graWToku()
     {
