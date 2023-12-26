@@ -1,46 +1,80 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 
 public class Detrasher extends JFrame{
 
     PanelMenu panelMenu;
+    int licznikMenu=2;
+
+    public static String nick;
     PanelGry panelGry;
+    OknoNicku oknoNicku;
+
     public Detrasher() {
         initUI();
+        setLocationRelativeTo(null);
+
+
+
         panelGry.spadekStart();
         setFocusOnMenuOrGamePanel(panelGry,panelMenu);
     }
 
-    private void setFocusOnMenuOrGamePanel(PanelGry g,PanelMenu m){
+    public static void setNick(String nick) {
+        Detrasher.nick = nick;
+    }
+
+    private void setFocusOnMenuOrGamePanel(PanelGry g, PanelMenu m){
+        m.restartButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                panelGry.restartGry();
+            }
+        });
         m.menuPrzycisk.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if(m.menuPrzycisk.getForeground()==Color.black)
+                if(licznikMenu%2==0)
                 {
                     m.menuPrzycisk.setForeground(Color.red);
+
+                    m.MenuWersjaB();
+                    m.repaint();
+
                     if(g.getCzyPausa()==false){g.pausa();}
 
                     m.menuPrzycisk.setFocusable(false);
+                    licznikMenu++;
                 }
                 else
                 {
-                    m.menuPrzycisk.setForeground(Color.black);
+                    m.menuPrzycisk.setForeground(Color.BLACK);
+
+                    m.MenuWersjaA();
+                    m.repaint();
+
                     m.menuPrzycisk.setFocusable(false);
                     if(g.getCzyPausa()==false){g.pausa();}
+
+                    licznikMenu++;
                 }
 
             }
         });
+
     }
 
     private void initUI() {
         GridBagConstraints gridBagConstraints;
-        panelMenu= new PanelMenu();
+        panelMenu= new PanelMenu(this);
         panelGry = new PanelGry(this);
+        oknoNicku=new OknoNicku(this);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Detrasher");
@@ -82,7 +116,13 @@ public class Detrasher extends JFrame{
             @Override
             public void run()
             {
+
+
                 Detrasher gra = new Detrasher();
+
+
+
+
             }
 
         });

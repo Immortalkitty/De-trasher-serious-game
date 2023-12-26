@@ -16,7 +16,7 @@ public class PanelGry extends JPanel {
     private BufferedImage smiecImage = null;
     private BufferedImage tloImage = null;
     private int poprzedniIndeksPrzyspieszenia=0;
-    private int k;
+    public int k;
 
 
 
@@ -102,6 +102,7 @@ public class PanelGry extends JPanel {
         if (czyPausa==true)
         {
             czyPausa=false;
+            //System.out.println(Detrasher.nick);
             repaint();
         }
     }
@@ -165,6 +166,12 @@ public class PanelGry extends JPanel {
         repaint();
 
 
+    }
+    public void restartGry(){
+        PanelGry.szanse=3;
+        k=1;
+        PanelGry.dobrePrzyporzadkowanieLicznik=0;
+        spadekStart();
     }
     private void graWToku()
     {
