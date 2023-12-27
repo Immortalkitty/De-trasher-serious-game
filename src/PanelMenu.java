@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import static java.awt.Font.BOLD;
+
 
 public class PanelMenu extends JPanel {
 
@@ -26,7 +28,7 @@ public class PanelMenu extends JPanel {
 
     public void setPunktacja()
     {
-        this.punktacjaLabel.setText(("Points:" + PanelGry.dobrePrzyporzadkowanieLicznik));
+        this.punktacjaLabel.setText(("Punkty: " + PanelGry.dobrePrzyporzadkowanieLicznik));
     }
 
     public void initUIMenu(Detrasher parent){
@@ -105,9 +107,15 @@ public class PanelMenu extends JPanel {
     }
 
 
-        public static void infoBox(String infoMessage, String titleBar)
+        public void infoBox(String infoMessage, String titleBar)
     {
-        JOptionPane.showMessageDialog(null, infoMessage, titleBar, JOptionPane.INFORMATION_MESSAGE);
+        JTextArea text=new JTextArea("Jak grać? \n\n"+infoMessage);
+        text.setFont(new Font("Segoe UI", BOLD, 18));
+        text.setForeground(new Color(168, 52, 235));
+        text.setBackground(new Color(255, 153, 0, 179));
+        text.setEditable(false);
+        JOptionPane.showMessageDialog(null, text,titleBar, JOptionPane.PLAIN_MESSAGE);
+
     }
     public void MenuWersjaB(){
         //ta metoda rysuje drugą wersję menu z innymi przyciskami
@@ -144,7 +152,7 @@ public class PanelMenu extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //super.mouseClicked(e);
-                infoBox("Informacja","I");
+                infoBox("Steruj strzałkami klawiatury aby odpady trafiły do właściwych pojemników.\n\nWznowisz grę ENTEREM, a zatrzymasz klawiszem P.\n\nMożesz zmienić nick pod jakim w pliku zostanie zapisany twój wynik na początku gry \nlub także w trakcie z poziomu menu.\n\nMiłej zabawy! ","O grze");
                 informacjaButton.setFocusable(false);
             }
 

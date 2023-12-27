@@ -2,27 +2,37 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.*;
 import javax.imageio.*;
 import javax.swing.*;
+import javax.swing.Timer;
+
+import static java.awt.Font.BOLD;
+
 //cur od current
 public class PanelGry extends JPanel {
 
     private int interwalGry;
     private Timer timer;
     private boolean czyPausa;
-    public static int dobrePrzyporzadkowanieLicznik = 0;
+    public static int dobrePrzyporzadkowanieLicznik ;
     public Odpad curOdpad;
-    public static int szanse=3;
+    public static int szanse;
     private BufferedImage smiecImage = null;
     private BufferedImage tloImage = null;
     private int poprzedniIndeksPrzyspieszenia=0;
     public int k;
+    private String nick;
+    private int wynik;
 
 
 
     private void initUIPoleGry()
     {
         k=1;
+        szanse=3;
+        dobrePrzyporzadkowanieLicznik=0;
+
         setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
         setMaximumSize(new Dimension(1000, 700));
         setMinimumSize(new Dimension(1000, 700));
@@ -57,8 +67,8 @@ public class PanelGry extends JPanel {
 
                     case KeyEvent.VK_P -> pausa();
                     case KeyEvent.VK_ENTER -> wznowienie();
-                    case KeyEvent.VK_LEFT -> sprobujRuszyc( curOdpad.getX() - 1*25, curOdpad.getY());
-                    case KeyEvent.VK_RIGHT -> sprobujRuszyc(curOdpad.getX()+1*25, curOdpad.getY());
+                    case KeyEvent.VK_LEFT -> sprobujRuszyc( curOdpad.getLgX() - 1*25, curOdpad.getLgY());
+                    case KeyEvent.VK_RIGHT -> sprobujRuszyc(curOdpad.getLgX()+1*25, curOdpad.getLgY());
 
 
                 }
@@ -118,12 +128,12 @@ public class PanelGry extends JPanel {
     {
         g.drawImage(tloImage, 0, 0, null);
 
-        g.drawImage(smiecImage, curOdpad.getX(),curOdpad.getY(), null);
+        g.drawImage(smiecImage, curOdpad.getLgX(),curOdpad.getLgY(), null);
 
         if (k==0)
         {
             String s="Koniec Gry";
-            g.setFont(new Font("serif", Font.BOLD, 60));
+            g.setFont(new Font("serif", BOLD, 60));
             g.setColor(Color.RED);
             g.drawString(s, getWidth() / 2 - g.getFontMetrics().stringWidth(s) / 2,
                     getHeight() / 2 - g.getFontMetrics().getHeight() / 2);
@@ -144,8 +154,8 @@ public class PanelGry extends JPanel {
             return false;
         }
 
-        curOdpad.setX(newX);
-        curOdpad.setY(newY);
+        curOdpad.setLgX(newX);
+        curOdpad.setLgY(newY);
         repaint();
         return true;
     }
@@ -159,18 +169,138 @@ public class PanelGry extends JPanel {
         }
     }
 
+    public void wyswietlTablicaWynikow(String infoMessage, String titleBar)
+    {
+        JTextArea text=new JTextArea("Oto najwyższe z uzyskanych wyników! \n\n"+infoMessage);
+        text.setFont(new Font("Segoe UI", BOLD, 18));
+        text.setForeground(new Color(168, 52, 235));
+        text.setEditable(false);
+        JOptionPane.showMessageDialog(null, text,titleBar, JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public void tablicaWynikow(){
+        Scanner odczytaj;
+        PrintWriter wpisz;
+        ArrayList<String> nicki = new ArrayList<String>();
+        ArrayList<Integer> wyniki = new ArrayList<Integer>();
+        File f = new File("Detrasher_wyniki.txt");
+        if(!f.exists()){
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        try
+        {
+            odczytaj = new Scanner(new FileReader("Detrasher_wyniki.txt"));
+
+            while (odczytaj.hasNext ())
+            {
+                nicki.add(odczytaj.next());
+                wyniki.add(odczytaj.nextInt ());
+            }
+
+        }
+        catch (FileNotFoundException fnfe)
+        {
+            System.out.println(fnfe+": Nie znaleziono Pliku!");
+        }
+        catch (InputMismatchException ime)
+        {
+            System.out.println(ime+": Dane w złym formacie!");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        nicki.add(Detrasher.nick);
+        wyniki.add(dobrePrzyporzadkowanieLicznik);
+
+        try{
+
+            wpisz = new PrintWriter ("Detrasher_wyniki.txt");
+
+
+            for(int i=0; i<nicki.size(); i++)
+            {
+                wpisz.print(nicki.get(i) + "\t");
+                wpisz.println(wyniki.get(i));
+
+
+            }
+            wpisz.close ();
+        }
+
+        catch (FileNotFoundException fnfe)
+        {
+            System.out.println(fnfe+": Nie znaleziono pliku!");
+        }
+        catch (InputMismatchException ime)
+        {
+            System.out.println(ime+": Zły format danych!");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        String informacjaWyniki=" ";
+        int najwyzszy;
+        int j=0;
+
+        while(nicki.size()>0 && j<5)
+        {
+            ArrayList<Integer> indeksyNajwyzszych = new ArrayList<Integer>();
+            najwyzszy = Collections.max(wyniki);
+
+            int i = 0;
+            for (int w : wyniki)
+            {
+                if (w == najwyzszy)
+                {
+                    indeksyNajwyzszych.add(i);
+                }
+                i++;
+            }
+
+            for (int ind : indeksyNajwyzszych)
+            {
+                informacjaWyniki = informacjaWyniki + (j+1)+ ". "+ nicki.get(ind) + "- " + wyniki.get(ind) + "\n ";
+
+            }
+
+            indeksyNajwyzszych.sort(Comparator.reverseOrder());
+            for (int ind : indeksyNajwyzszych)
+            {
+                wyniki.remove(ind);
+                nicki.remove(ind);
+
+            }
+            j++;
+
+
+
+        }
+
+        this.wyswietlTablicaWynikow(informacjaWyniki,"Gratulacje!");
+
+    }
     private void koniecGry()
     {
         czyPausa=true;
         k=0;
         repaint();
-
-
+        tablicaWynikow();
     }
     public void restartGry(){
         PanelGry.szanse=3;
         k=1;
         PanelGry.dobrePrzyporzadkowanieLicznik=0;
+        this.poprzedniIndeksPrzyspieszenia=0;
+        this.setInterwalGry(300);
+        timer.setDelay(interwalGry);
+
         spadekStart();
     }
     private void graWToku()
@@ -195,9 +325,9 @@ public class PanelGry extends JPanel {
     private void updateGry()
     {
 
-        if (curOdpad.getY()<525)
+        if ((curOdpad.getLgY()+curOdpad.cY)<550) //srodek ciezkosci obiektu przekorczy dana linie w y
         {
-            curOdpad.setY(curOdpad.getY()+25); //spadanie
+            curOdpad.setLgY(curOdpad.getLgY()+25); //spadanie
         }
         else
         {
@@ -213,6 +343,9 @@ public class PanelGry extends JPanel {
         }
 
     }
+    private void setInterwalGry(int nowyInterwal){
+        this.interwalGry=nowyInterwal;
+    }
 
 
     private void wczytajNowyOdpad()
@@ -221,6 +354,9 @@ public class PanelGry extends JPanel {
         try
         {
             smiecImage = ImageIO.read(new File(curOdpad.getSmiecPath()));
+            curOdpad.cX = smiecImage.getWidth()/2;
+            curOdpad.cY = smiecImage.getHeight()/2;
+
         }
         catch (IOException e)
         {
@@ -231,7 +367,7 @@ public class PanelGry extends JPanel {
 
     private void sprawdzCzyDobryKosz(Odpad o)
     {
-        switch(o.getX()/200) //dzielenie bez reszty przez szerokosc kosza celem weryfikacji w switchu do ktorego spadl odpad
+        switch((o.getLgX()+o.cX)/200) //dzielenie bez reszty przez szerokosc kosza celem weryfikacji w switchu do ktorego spadl odpad
         {
             case 4:
             {

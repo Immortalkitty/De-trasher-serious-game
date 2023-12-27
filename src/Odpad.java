@@ -2,8 +2,10 @@ import java.util.Random;
 
 public class Odpad {
 
-    private int posX;
-    private int posY;
+    private int lgX; //lewy gorny naroznik
+    private int lgY;
+    public int cX;//x centrum
+    public int cY;
     private TypySmieci TypSmiecia;
 
     private int wylosowanyNumer;
@@ -13,8 +15,8 @@ public class Odpad {
              TypySmieci.PLASTIK,TypySmieci.PAPIER,TypySmieci.RESZTKOWY };
 
     public Odpad(){
-        this.posX=500;
-        this.posY=0;
+        this.lgX =500;
+        this.lgY =0;
         Random losujSmiec= new Random();
         wylosowanyNumer= losujSmiec.nextInt(1,9);
         this.setTyp(wylosowanyNumer);
@@ -22,11 +24,11 @@ public class Odpad {
 
     public enum TypySmieci {RESZTKOWY,PLASTIK,BIO,SZKLO,PAPIER }
 
-    public int getX() { return posX; }
-    public int getY() { return posY; }
+    public int getLgX() { return lgX; }
+    public int getLgY() { return lgY; }
 
-    public void setX(int x)  { this.posX=x; }
-    public void setY(int y)  { this.posY=y; }
+    public void setLgX(int x)  { this.lgX =x; }
+    public void setLgY(int y)  { this.lgY =y; }
 
     public TypySmieci getTyp()
     {

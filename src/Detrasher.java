@@ -18,9 +18,6 @@ public class Detrasher extends JFrame{
     public Detrasher() {
         initUI();
         setLocationRelativeTo(null);
-
-
-
         panelGry.spadekStart();
         setFocusOnMenuOrGamePanel(panelGry,panelMenu);
     }
