@@ -178,6 +178,18 @@ public class PanelGry extends JPanel {
         JOptionPane.showMessageDialog(null, text,titleBar, JOptionPane.PLAIN_MESSAGE);
     }
 
+    public int wyswietlWskazowke(String info, String tytul)
+    {
+        JTextArea text=new JTextArea(info);
+        text.setFont(new Font("Segoe UI", BOLD, 18));
+        text.setForeground(new Color(52, 144, 235));
+        text.setEditable(false);
+        String[] opcje = { "OK, gramy dalej", "daj mi chwilę" };
+        int a=JOptionPane.showOptionDialog(null, text, tytul,0, -1,null, opcje,opcje[0]);
+        return a;
+
+    }
+
     public void tablicaWynikow(){
         Scanner odczytaj;
         PrintWriter wpisz;
@@ -375,7 +387,17 @@ public class PanelGry extends JPanel {
                 {
                     dobrePrzyporzadkowanieLicznik++;
                 }
-                else szanse--;
+                else
+                {
+                    int i=5;
+                    szanse--;
+                    pausa();
+                    i=wyswietlWskazowke(o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
+                    if (i==0)
+                    {
+                        wznowienie();
+                    }
+                }
             }
             break;
             case 3:
@@ -384,7 +406,17 @@ public class PanelGry extends JPanel {
                 {
                     dobrePrzyporzadkowanieLicznik++;
                 }
-                else szanse--;
+                else
+                {
+                    int i=5;
+                    szanse--;
+                    pausa();
+                    i=wyswietlWskazowke(o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
+                    if (i==0)
+                    {
+                        wznowienie();
+                    }
+                }
             }
             break;
 
@@ -394,7 +426,17 @@ public class PanelGry extends JPanel {
                 {
                     dobrePrzyporzadkowanieLicznik++;
                 }
-                else szanse--;
+                else
+                {
+                    int i=5;
+                    szanse--;
+                    pausa();
+                    i=wyswietlWskazowke(o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
+                    if (i==0)
+                    {
+                        wznowienie();
+                    }
+                }
             }
             break;
             case 1:
@@ -403,7 +445,17 @@ public class PanelGry extends JPanel {
                 {
                     dobrePrzyporzadkowanieLicznik++;
                 }
-                else szanse--;
+                else
+                {
+                    int i=5;
+                    szanse--;
+                    pausa();
+                    i=wyswietlWskazowke(o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
+                    if (i==0)
+                    {
+                        wznowienie();
+                    }
+                }
             }
             break;
             case 0:
@@ -412,7 +464,17 @@ public class PanelGry extends JPanel {
                 {
                     dobrePrzyporzadkowanieLicznik++;
                 }
-                else szanse--;
+                else
+                {
+                    int i=5;
+                    szanse--;
+                    pausa();
+                    i=wyswietlWskazowke(o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
+                    if (i==0)
+                    {
+                        wznowienie();
+                    }
+                }
             }
             break;
         }
