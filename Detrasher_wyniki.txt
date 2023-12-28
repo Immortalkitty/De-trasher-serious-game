@@ -1,0 +1,7 @@
+Kasia	3
+null	8
+null	16
+null	12
+null	3
+null	3
+null	6
