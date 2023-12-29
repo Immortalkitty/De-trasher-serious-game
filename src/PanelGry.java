@@ -392,7 +392,7 @@ public class PanelGry extends JPanel {
                     int i=5;
                     szanse--;
                     pausa();
-                    i=wyswietlWskazowke(o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
+                    i=wyswietlWskazowke("\n"+o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
                     if (i==0)
                     {
                         wznowienie();
@@ -411,7 +411,7 @@ public class PanelGry extends JPanel {
                     int i=5;
                     szanse--;
                     pausa();
-                    i=wyswietlWskazowke(o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
+                    i=wyswietlWskazowke("\n"+o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
                     if (i==0)
                     {
                         wznowienie();
@@ -431,7 +431,7 @@ public class PanelGry extends JPanel {
                     int i=5;
                     szanse--;
                     pausa();
-                    i=wyswietlWskazowke(o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
+                    i=wyswietlWskazowke("\n"+o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
                     if (i==0)
                     {
                         wznowienie();
@@ -450,7 +450,7 @@ public class PanelGry extends JPanel {
                     int i=5;
                     szanse--;
                     pausa();
-                    i=wyswietlWskazowke(o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
+                    i=wyswietlWskazowke("\n"+o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
                     if (i==0)
                     {
                         wznowienie();
@@ -469,7 +469,7 @@ public class PanelGry extends JPanel {
                     int i=5;
                     szanse--;
                     pausa();
-                    i=wyswietlWskazowke(o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
+                    i=wyswietlWskazowke("\n"+o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
                     if (i==0)
                     {
                         wznowienie();

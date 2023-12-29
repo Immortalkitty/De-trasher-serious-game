@@ -9,7 +9,7 @@ import javax.swing.*;
 public class Detrasher extends JFrame{
 
     PanelMenu panelMenu;
-    int licznikMenu=2;
+    static int licznikMenu=2;
 
     public static String nick;
     PanelGry panelGry;
@@ -39,7 +39,7 @@ public class Detrasher extends JFrame{
 
                 if(licznikMenu%2==0)
                 {
-                    m.menuPrzycisk.setForeground(Color.red);
+                    //m.menuPrzycisk.setForeground(Color.red);
 
                     m.MenuWersjaB();
                     m.repaint();
@@ -48,6 +48,13 @@ public class Detrasher extends JFrame{
 
                     m.menuPrzycisk.setFocusable(false);
                     licznikMenu++;
+                   // if(2 >= licznikMenu) licznikMenu = 0;
+                   /*
+                    if (1 == licznikMenu)
+                        licznikMenu = 0;
+                    else
+                        licznikMenu = 1;
+                   */
                 }
                 else
                 {

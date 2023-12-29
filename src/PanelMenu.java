@@ -1,11 +1,10 @@
-import javax.imageio.ImageIO;
+
+
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
 import static java.awt.Font.BOLD;
 
 
@@ -18,11 +17,11 @@ public class PanelMenu extends JPanel {
     public JLabel szanseLabel;
     private Timer timerMenu;
     private int interwałMenu;
-    private javax.swing.JButton informacjaButton;
+    private JButton informacjaButton;
 
-    public javax.swing.JButton restartButton;
-    private javax.swing.JButton zakonczButton;
-    private javax.swing.JButton zmienNickButton;
+    public JButton restartButton;
+    private JButton zakonczButton;
+    private JButton zmienNickButton;
 
 
 
@@ -39,10 +38,10 @@ public class PanelMenu extends JPanel {
 
         szanseLabel = new JLabel();
 
-        informacjaButton = new javax.swing.JButton();
-        zakonczButton = new javax.swing.JButton();
-        restartButton = new javax.swing.JButton();
-        zmienNickButton = new javax.swing.JButton();
+        informacjaButton = new JButton();
+        zakonczButton = new JButton();
+        restartButton = new JButton();
+        zmienNickButton = new JButton();
 
 
         setBackground(new Color(255, 153, 0));
@@ -119,14 +118,14 @@ public class PanelMenu extends JPanel {
     }
     public void MenuWersjaB(){
         //ta metoda rysuje drugą wersję menu z innymi przyciskami
-        //powrotButton = new javax.swing.JButton();
+        //powrotButton = new JButton();
         remove(panelSzans);
         remove(szanseLabel);
 
         remove(punktacjaLabel);
 
         this.setBackground(new java.awt.Color(255, 153, 0));
-        this.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        this.setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         this.setMinimumSize(new java.awt.Dimension(1000, 200));
         this.setPreferredSize(new java.awt.Dimension(1000, 200));
         this.setLayout(new java.awt.GridLayout(1, 3, 40, 40));
@@ -135,9 +134,9 @@ public class PanelMenu extends JPanel {
         menuPrzycisk.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         menuPrzycisk.setText("Powrót");
         menuPrzycisk.setAlignmentY(20.0F);
-        menuPrzycisk.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menuPrzycisk.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         menuPrzycisk.setContentAreaFilled(false);
-        menuPrzycisk.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        menuPrzycisk.setHorizontalTextPosition(SwingConstants.CENTER);
         menuPrzycisk.setMaximumSize(new java.awt.Dimension(75, 20));
         menuPrzycisk.setMinimumSize(new java.awt.Dimension(75, 20));
         menuPrzycisk.setPreferredSize(new java.awt.Dimension(75, 20));
@@ -146,12 +145,11 @@ public class PanelMenu extends JPanel {
         informacjaButton.setBackground(new java.awt.Color(255, 153, 0));
         informacjaButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         informacjaButton.setText("O grze");
-        informacjaButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        informacjaButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         add(informacjaButton);
         informacjaButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //super.mouseClicked(e);
                 infoBox("Steruj strzałkami klawiatury aby odpady trafiły do właściwych pojemników.\n\nWznowisz grę ENTEREM, a zatrzymasz klawiszem P.\n\nMożesz zmienić nick pod jakim w pliku zostanie zapisany twój wynik na początku gry \nlub także w trakcie z poziomu menu.\n\nMiłej zabawy! ","O grze");
                 informacjaButton.setFocusable(false);
             }
@@ -161,7 +159,7 @@ public class PanelMenu extends JPanel {
         zakonczButton.setBackground(new java.awt.Color(255, 153, 0));
         zakonczButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         zakonczButton.setText("Zakończ Grę");
-        zakonczButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        zakonczButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED));
         add(zakonczButton);
 
         zakonczButton.addMouseListener(new MouseAdapter() {
@@ -176,7 +174,7 @@ public class PanelMenu extends JPanel {
         restartButton.setBackground(new java.awt.Color(255, 153, 0));
         restartButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         restartButton.setText("Restart gry");
-        restartButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        restartButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         add(restartButton);
 
 
@@ -184,7 +182,7 @@ public class PanelMenu extends JPanel {
         zmienNickButton.setBackground(new java.awt.Color(255, 153, 0));
         zmienNickButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         zmienNickButton.setText("Zmień swój nick");
-        zmienNickButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        zmienNickButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         add(zmienNickButton);
 
         zmienNickButton.addMouseListener(new MouseAdapter() {
@@ -231,6 +229,7 @@ public void MenuWersjaA(){
     remove(restartButton);
     remove(informacjaButton);
     remove(zakonczButton);
+
 
     setBackground(new Color(255, 153, 0));
     setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
