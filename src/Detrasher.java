@@ -5,49 +5,82 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
 
+/**
+ * Gra edukacyjna o segregacji odpadow. Klasa glowna cyklicznie tworzaca okna zawierajace panel gry oraz panel menu.
+ *
+ * @author Katarzyna Szczerba
+ */
+
 
 public class Detrasher extends JFrame{
+    /** Instancja klasy PanelMenu wyswietlana w tym obiekcie gry*/
+    private PanelMenu panelMenu;
 
-    PanelMenu panelMenu;
-    static int licznikMenu=2;
+    /** Wysokosc okna gry w pikselach*/
+    private final int wysGry=800;
 
-    public static String nick;
-    PanelGry panelGry;
-    OknoNicku oknoNicku;
+    /** Szerokosc okna gry w pikselach*/
+    private final int szerGry=1000;
 
-    public Detrasher() {
+    /** Atrybut okreslajacy, ktora z dwoch dostepnych wersji paska menu nalezy aktualnie wyswietlac*/
+    private static int licznikMenu;
+
+    /** Ostatnio podany przez gracza nick, ktory wraz z wynikiem punktowym nalezy zapisac w pliku zewnetrznym w przypadku zakonczenia gry.*/
+    private static String nick;
+
+    /** Instancja klasy PanelGry wyswietlana w tym obiekcie gry*/
+    private PanelGry panelGry;
+
+    /**
+     * Glowny konstruktor klasy ustawia wartosci pol na domyslne, buduje GUI i umozliwia rozpoczecie graczowi gry.
+     */
+    public Detrasher()
+    {
         initUI();
+        licznikMenu=2;
         setLocationRelativeTo(null);
         panelGry.spadekStart();
-        setFocusOnMenuOrGamePanel(panelGry,panelMenu);
+        setFocusIWymienInformacjePanele(panelGry,panelMenu);
+    }
+    /** Getter statycznego pola klasy Detrasher- nick */
+    public static String getNick()
+    {
+        return nick;
     }
 
+    /**
+     * Metoda ta ustawia podany obiekt klasy String jako nowa wartosc statycznego pola klasy glownej.
+     * @param nick na ten String zostanie zmieniona wartosc pola nick klasy Detrasher
+     */
     public static void setNick(String nick) {
         Detrasher.nick = nick;
     }
 
-    private void setFocusOnMenuOrGamePanel(PanelGry g, PanelMenu m){
-        m.restartButton.addMouseListener(new MouseAdapter() {
+    /**
+     * Metoda ta, uzywana przy tworzeniu obiektu Detrasher, przekazuje focus w oknie gry z przyciskow
+     * (ktore maja priorytet i przy tworzeniu go przejmuja) na panel gry,
+     * tak aby uzytkownik mogl sterowac odpowiednimi obiektami w grze. Ponadto tworzy ActionListenery,
+     * do ktorych dzialania potrzebne byly instancje zarowno panela menu i panela gry.
+     * @param g instancja klasy PanelGry
+     * @param m instancja klasy PanelMenu
+     */
+    private void setFocusIWymienInformacjePanele(PanelGry g, PanelMenu m)
+    {
+        m.getRestartButton().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 panelGry.restartGry();
             }
         });
-        m.menuPrzycisk.addActionListener(new ActionListener() {
+        m.getMenuButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                if(g.getCzyPausa()==false){g.pausa();} //zatrzymanie gry przy kliknieciu menu
+
                 if(licznikMenu%2==0)
                 {
-                    //m.menuPrzycisk.setForeground(Color.red);
-
-                    m.MenuWersjaB();
-                    m.repaint();
-
-                    if(g.getCzyPausa()==false){g.pausa();}
-
-                    m.menuPrzycisk.setFocusable(false);
-                    licznikMenu++;
+                    m.konwertujNaMenuWersjaB();
                    // if(2 >= licznikMenu) licznikMenu = 0;
                    /*
                     if (1 == licznikMenu)
@@ -58,33 +91,42 @@ public class Detrasher extends JFrame{
                 }
                 else
                 {
-                    m.menuPrzycisk.setForeground(Color.BLACK);
-
-                    m.MenuWersjaA();
-                    m.repaint();
-
-                    m.menuPrzycisk.setFocusable(false);
-                    if(g.getCzyPausa()==false){g.pausa();}
-
-                    licznikMenu++;
+                    m.konwertujNaMenuWersjaA();
                 }
 
+                m.repaint();
+                m.getMenuButton().setFocusable(false);//rozwiazanie problemu z brakiem mozliwosci sterowania w panelu gry,
+                // tymczasowe zdjecie focusa z przycisku
+                licznikMenu++;
+            }
+        });
+
+        m.getZakonczButton().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!g.getCzyGraSkonczona()) g.TablicaWynikowZPliku("Detrasher_wyniki.txt",5); //jesli gra nie zostala formalnie ukonczona,
+                // dotychczas uzyskany wynik jest zapisywany w pliku
+                System.exit(0);
             }
         });
 
     }
 
+    /**
+     * Metoda ta tworzy obiekt okna, w ktore mozna wpisac nick,okno glowne zawierajace panel menu oraz panel gry.
+     * Komponenty odpowiednio uklada, ustawia im odpowiednie wlasciowosci.
+     */
     private void initUI() {
-        GridBagConstraints gridBagConstraints;
-        panelMenu= new PanelMenu(this);
-        panelGry = new PanelGry(this);
-        oknoNicku=new OknoNicku(this);
+        panelMenu= new PanelMenu();
+        panelGry = new PanelGry();
+        OknoNicku oknoNicku = new OknoNicku();
 
+        GridBagConstraints gridBagConstraints;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setTitle("Detrasher");
+        setUndecorated(true);
         setVisible(true);
-        setMaximumSize(new Dimension(1000, 800));
-        setMinimumSize(new Dimension(1000, 800));
+        setMaximumSize(new Dimension(szerGry, wysGry));
+        setMinimumSize(new Dimension(szerGry, wysGry));
         setResizable(false);
         getContentPane().setLayout(new GridBagLayout());
 
@@ -107,26 +149,18 @@ public class Detrasher extends JFrame{
         getContentPane().add(panelMenu, gridBagConstraints);
 
         pack();
-
         panelGry.requestFocusInWindow();
-
-
     }
 
+/** Metoda uruchamia gre. Dzieki niej kiedy spadajacy obiekt dotrze do konca planszy,
+ *  caly cykl gry jest powtarzany az do zakonczenia gry.*/
     public static void main(String[] args) {
-
         EventQueue.invokeLater(new Runnable()
         {
             @Override
             public void run()
             {
-
-
                 Detrasher gra = new Detrasher();
-
-
-
-
             }
 
         });

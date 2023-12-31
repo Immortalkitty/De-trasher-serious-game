@@ -9,30 +9,96 @@ import javax.swing.Timer;
 
 import static java.awt.Font.BOLD;
 
+/* TODO
+*   ladniejsze fonty, kolory, nowe smieci
+*  wyswietlanie wersji menuzeby serio nie przekroczyli inata */
+
 //cur od current
 public class PanelGry extends JPanel {
 
     private int interwalGry;
     private Timer timer;
     private boolean czyPausa;
-    public static int dobrePrzyporzadkowanieLicznik ;
-    public Odpad curOdpad;
-    public static int szanse;
-    private BufferedImage smiecImage = null;
-    private BufferedImage tloImage = null;
-    private int poprzedniIndeksPrzyspieszenia=0;
-    public int k;
-    private String nick;
-    private int wynik;
+    private static int dobrePrzyporzadkowanieLicznik ;
+    private Odpad curOdpad;
+    private static int szanse;
+    private BufferedImage smiecImage=null;
+    private BufferedImage tloImage=null;
+    private int poprzedniIndeksPrzyspieszenia;
+    private boolean czyGraSkonczona;
+    private int ruchPoziomy;
+    private int liniaSprawdzenia;
+    private int ruchPion;
+    private int szerKosza;
+    private int coIlePrzyspiesz;
+
+    public PanelGry() {
+
+        szanse=3;
+        dobrePrzyporzadkowanieLicznik=0;
+        poprzedniIndeksPrzyspieszenia=0;
+        ruchPoziomy=25;
+        liniaSprawdzenia=550;
+        ruchPion=25;
+        szerKosza=200;
+        coIlePrzyspiesz=5;
+
+        czyPausa = true;
+        interwalGry = 300;
+
+        initUIPoleGry();
+        setCzyGraSkonczona(false);
+
+        timer = new Timer(interwalGry,new CyklGry());
+        timer.start();
+        addKeyListener(new KeyAdapter(){
+            public void keyPressed(KeyEvent e) {
+
+                int keycode = e.getKeyCode();
+
+                switch (keycode) {
+
+                    case KeyEvent.VK_P -> pausa();
+                    case KeyEvent.VK_ENTER -> wznowienie();
+                    case KeyEvent.VK_LEFT -> sprobujRuszyc( curOdpad.getLgX() - 1*ruchPoziomy, curOdpad.getLgY());
+                    case KeyEvent.VK_RIGHT -> sprobujRuszyc(curOdpad.getLgX()+1*ruchPoziomy, curOdpad.getLgY());
 
 
+                }
+            }
+
+        });
+
+        try
+        {
+            tloImage = ImageIO.read(new File("resources/Tło-detrasher.jpg"));
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static int getSzanse() {
+        return szanse;
+    }
+
+    public static int getDobrePrzyporzadkowanieLicznik(){
+        return dobrePrzyporzadkowanieLicznik;
+
+    }
+
+    public boolean getCzyGraSkonczona() {
+        return czyGraSkonczona;
+    }
+
+    public void setCzyGraSkonczona(boolean czyGraSkonczona){
+        this.czyGraSkonczona=czyGraSkonczona;
+    }
 
     private void initUIPoleGry()
     {
-        k=1;
-        szanse=3;
-        dobrePrzyporzadkowanieLicznik=0;
-
         setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
         setMaximumSize(new Dimension(1000, 700));
         setMinimumSize(new Dimension(1000, 700));
@@ -49,41 +115,6 @@ public class PanelGry extends JPanel {
                         .addGap(0, 598, Short.MAX_VALUE)
         );
 
-
-    }
-    public PanelGry(Detrasher parent) {
-
-        initUIPoleGry();
-        czyPausa = true;
-        interwalGry = 300;
-        timer = new Timer(interwalGry,new CyklGry());
-        timer.start();
-        addKeyListener(new KeyAdapter(){
-            public void keyPressed(KeyEvent e) {
-
-                int keycode = e.getKeyCode();
-
-                switch (keycode) {
-
-                    case KeyEvent.VK_P -> pausa();
-                    case KeyEvent.VK_ENTER -> wznowienie();
-                    case KeyEvent.VK_LEFT -> sprobujRuszyc( curOdpad.getLgX() - 1*25, curOdpad.getLgY());
-                    case KeyEvent.VK_RIGHT -> sprobujRuszyc(curOdpad.getLgX()+1*25, curOdpad.getLgY());
-
-
-                }
-            }
-
-        });
-
-        try
-        {
-            tloImage = ImageIO.read(new File("src/Tło-detrasher.jpg"));
-        }
-        catch (IOException e)
-        {
-            throw new RuntimeException(e);
-        }
 
     }
 
@@ -112,7 +143,6 @@ public class PanelGry extends JPanel {
         if (czyPausa==true)
         {
             czyPausa=false;
-            //System.out.println(Detrasher.nick);
             repaint();
         }
     }
@@ -121,16 +151,16 @@ public class PanelGry extends JPanel {
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        rysuj(g,k);
+        rysuj(g);
     }
 
-    private void rysuj(Graphics g,int k)
+    private void rysuj(Graphics g)
     {
         g.drawImage(tloImage, 0, 0, null);
 
         g.drawImage(smiecImage, curOdpad.getLgX(),curOdpad.getLgY(), null);
 
-        if (k==0)
+        if (getCzyGraSkonczona())
         {
             String s="Koniec Gry";
             g.setFont(new Font("serif", BOLD, 60));
@@ -138,6 +168,16 @@ public class PanelGry extends JPanel {
             g.drawString(s, getWidth() / 2 - g.getFontMetrics().stringWidth(s) / 2,
                     getHeight() / 2 - g.getFontMetrics().getHeight() / 2);
         }
+        if(czyPausa&(!getCzyGraSkonczona()))
+        {
+            String s="Pauza";
+            g.setFont(new Font("serif", BOLD, 60));
+            g.setColor(new Color(53, 128, 60, 254));
+            g.drawString(s, getWidth() / 2 - g.getFontMetrics().stringWidth(s) / 2,
+                    getHeight() / 2 - g.getFontMetrics().getHeight() / 2);
+        }
+
+
     }
 
     public boolean sprobujRuszyc(int newX, int newY)
@@ -149,8 +189,25 @@ public class PanelGry extends JPanel {
         int x = newX;
         int y = newY;
 
-        if (x < 0 || x >= 1000-25 || y < 0 || y >= 525)
+        if(x <= 0)
         {
+            curOdpad.setLgX(0);
+            return false;
+        }
+        if(x+ curOdpad.getcX()*2 >= 1000)
+        {
+            curOdpad.setLgX(1000-(curOdpad.getcX()*2));
+            return false;
+        }
+
+        if(y <= 0)
+        {
+            return false;
+        }
+
+        if(y+curOdpad.getcY() >= (liniaSprawdzenia))
+        {
+            curOdpad.setLgY(liniaSprawdzenia- curOdpad.getcY());
             return false;
         }
 
@@ -190,22 +247,36 @@ public class PanelGry extends JPanel {
 
     }
 
-    public void tablicaWynikow(){
+    /** Metoda ta umozliwia odczytanie zawartosci pliku w formacie nazwa wlasna (bez bialych znakow) + tabulator + liczba calkowita
+     *  i wyswietlenie wybranej liczby miejsc w formie tablicy wynikow. Metoda w przypadku rownych wynikow wyswietli kilka pozycji
+     *  pod tym samym indeksem miejsca. W przypadku gdy plik o zadanej nazwie nie zostanie znaleziony, metoda utworzy go.
+     *  Po tym etapie dotychczasowa zawartosc pliku w niezmienionej kolejnosci, ale z dodanymi danymi o aktualnej rozgrywce,
+     *  tj. aktualnej wartosci pola klasy Detrasher nick oraz dobrePrzyporzadkowanieLicznik zostanie wpisana do pliku.
+     *  Metoda tworzy okno za pomoca metody wyswietlTablicaWynikow().
+     *  Przyjmuje
+     *  @param nazwaPliku pelna sciezka do pliku
+     *  @param ileMiejsc z ilu miejsc ma skladac sie wyswietlana tablica najwyzszych wynikow.*/
+    public void TablicaWynikowZPliku(String nazwaPliku, int ileMiejsc){
         Scanner odczytaj;
         PrintWriter wpisz;
         ArrayList<String> nicki = new ArrayList<String>();
         ArrayList<Integer> wyniki = new ArrayList<Integer>();
-        File f = new File("Detrasher_wyniki.txt");
-        if(!f.exists()){
-            try {
+        File f = new File(nazwaPliku);
+
+        if(!f.exists())
+        {
+            try
+            {
                 f.createNewFile();
-            } catch (IOException e) {
+            } catch (IOException e)
+            {
                 throw new RuntimeException(e);
             }
         }
+
         try
         {
-            odczytaj = new Scanner(new FileReader("Detrasher_wyniki.txt"));
+            odczytaj = new Scanner(new FileReader(nazwaPliku));
 
             while (odczytaj.hasNext ())
             {
@@ -227,12 +298,12 @@ public class PanelGry extends JPanel {
             System.out.println(e);
         }
 
-        nicki.add(Detrasher.nick);
+        nicki.add(Detrasher.getNick());
         wyniki.add(dobrePrzyporzadkowanieLicznik);
 
         try{
 
-            wpisz = new PrintWriter ("Detrasher_wyniki.txt");
+            wpisz = new PrintWriter (nazwaPliku);
 
 
             for(int i=0; i<nicki.size(); i++)
@@ -257,11 +328,12 @@ public class PanelGry extends JPanel {
         {
             System.out.println(e);
         }
+
         String informacjaWyniki=" ";
         int najwyzszy;
         int j=0;
 
-        while(nicki.size()>0 && j<5)
+        while(nicki.size()>0 && j<ileMiejsc)
         {
             ArrayList<Integer> indeksyNajwyzszych = new ArrayList<Integer>();
             najwyzszy = Collections.max(wyniki);
@@ -291,23 +363,21 @@ public class PanelGry extends JPanel {
             }
             j++;
 
-
-
         }
 
         this.wyswietlTablicaWynikow(informacjaWyniki,"Gratulacje!");
-
     }
+
     private void koniecGry()
     {
         czyPausa=true;
-        k=0;
+        setCzyGraSkonczona(true);
         repaint();
-        tablicaWynikow();
+        TablicaWynikowZPliku("Detrasher_wyniki.txt",5);
     }
     public void restartGry(){
         PanelGry.szanse=3;
-        k=1;
+        setCzyGraSkonczona(false);
         PanelGry.dobrePrzyporzadkowanieLicznik=0;
         this.poprzedniIndeksPrzyspieszenia=0;
         this.setInterwalGry(300);
@@ -337,17 +407,18 @@ public class PanelGry extends JPanel {
     private void updateGry()
     {
 
-        if ((curOdpad.getLgY()+curOdpad.cY)<550) //srodek ciezkosci obiektu przekorczy dana linie w y
+        if ((curOdpad.getLgY()+curOdpad.getcY())<liniaSprawdzenia) //srodek ciezkosci obiektu przekorczy dana linie w y
         {
-            curOdpad.setLgY(curOdpad.getLgY()+25); //spadanie
+            curOdpad.setLgY(curOdpad.getLgY()+ruchPion); //spadanie
         }
         else
         {
             sprawdzCzyDobryKosz(curOdpad);
 
-           if (dobrePrzyporzadkowanieLicznik>0 & dobrePrzyporzadkowanieLicznik%5==0 &(poprzedniIndeksPrzyspieszenia!=dobrePrzyporzadkowanieLicznik))//zapobiega przyspieszaniu wielokrotnemu jesli gracz nie zmieni liczby punktow bezposrednio po
+           if (dobrePrzyporzadkowanieLicznik>0 & dobrePrzyporzadkowanieLicznik%coIlePrzyspiesz==0
+                   &(poprzedniIndeksPrzyspieszenia!=dobrePrzyporzadkowanieLicznik))//zapobiega przyspieszaniu wielokrotnemu jesli gracz nie zmieni liczby punktow bezposrednio po
             {
-                interwalGry = interwalGry /2;
+                if (interwalGry>100) interwalGry = interwalGry-50;
                 poprzedniIndeksPrzyspieszenia=dobrePrzyporzadkowanieLicznik;
                 timer.setDelay(interwalGry);
             }
@@ -366,8 +437,9 @@ public class PanelGry extends JPanel {
         try
         {
             smiecImage = ImageIO.read(new File(curOdpad.getSmiecPath()));
-            curOdpad.cX = smiecImage.getWidth()/2;
-            curOdpad.cY = smiecImage.getHeight()/2;
+            curOdpad.setcX(smiecImage.getWidth()/2);
+            curOdpad.setcY(smiecImage.getHeight()/2);
+            curOdpad.setLgX(500-curOdpad.getcX());
 
         }
         catch (IOException e)
@@ -379,7 +451,7 @@ public class PanelGry extends JPanel {
 
     private void sprawdzCzyDobryKosz(Odpad o)
     {
-        switch((o.getLgX()+o.cX)/200) //dzielenie bez reszty przez szerokosc kosza celem weryfikacji w switchu do ktorego spadl odpad
+        switch((o.getLgX()+o.getcX())/szerKosza)
         {
             case 4:
             {
@@ -389,14 +461,7 @@ public class PanelGry extends JPanel {
                 }
                 else
                 {
-                    int i=5;
-                    szanse--;
-                    pausa();
-                    i=wyswietlWskazowke("\n"+o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
-                    if (i==0)
-                    {
-                        wznowienie();
-                    }
+                   zleDopasowano(o);
                 }
             }
             break;
@@ -408,14 +473,7 @@ public class PanelGry extends JPanel {
                 }
                 else
                 {
-                    int i=5;
-                    szanse--;
-                    pausa();
-                    i=wyswietlWskazowke("\n"+o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
-                    if (i==0)
-                    {
-                        wznowienie();
-                    }
+                    zleDopasowano(o);
                 }
             }
             break;
@@ -428,14 +486,7 @@ public class PanelGry extends JPanel {
                 }
                 else
                 {
-                    int i=5;
-                    szanse--;
-                    pausa();
-                    i=wyswietlWskazowke("\n"+o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
-                    if (i==0)
-                    {
-                        wznowienie();
-                    }
+                    zleDopasowano(o);
                 }
             }
             break;
@@ -447,14 +498,7 @@ public class PanelGry extends JPanel {
                 }
                 else
                 {
-                    int i=5;
-                    szanse--;
-                    pausa();
-                    i=wyswietlWskazowke("\n"+o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
-                    if (i==0)
-                    {
-                        wznowienie();
-                    }
+                    zleDopasowano(o);
                 }
             }
             break;
@@ -466,21 +510,28 @@ public class PanelGry extends JPanel {
                 }
                 else
                 {
-                    int i=5;
-                    szanse--;
-                    pausa();
-                    i=wyswietlWskazowke("\n"+o.getNazwa()+" powinien trafić do "+o.getPojemnik()+" pojemnika.\n","Pomyłka!");
-                    if (i==0)
-                    {
-                        wznowienie();
-                    }
+                   zleDopasowano(o);
                 }
             }
             break;
         }
 
     }
+
+    public void zleDopasowano(Odpad o)
+    {
+        int i;
+        szanse--;
+        pausa();
+        i=wyswietlWskazowke("\n"+o.getNazwa()+" idzie do "+o.getPojemnikSlowo()+" pojemnika.\n","Pomyłka!");
+        if (i==0)
+        {
+            wznowienie();
+        }
+    }
 }
+
+
 
 
 
