@@ -30,8 +30,10 @@ public class Odpad
      * PLASTIK,
      * BIO,
      * SZKLO,
-     * PAPIER.*/
-    public enum TypySmieci {RESZTKOWY,PLASTIK,BIO,SZKLO,PAPIER }
+     * PAPIER.
+     * */
+    public enum TypySmieci {/**typ smieci zmieszane*/RESZTKOWY,/**typ smieci plastik i metal*/PLASTIK,/**typ smieci biodegradowalne*/
+    BIO,/**typ smieci szklo*/SZKLO,/**typ smieci papier*/PAPIER }
 
     /** Uniwersalny konstruktor obiektu klasy Odpad. Definiuje polozenie, losuje numer dla obiektu,
      *  przypisuje typ obiektowi oraz nazwe na podstawie wylosowanego numeru.*/
@@ -47,63 +49,73 @@ public class Odpad
     }
 
     /** Getter wspolrzednej y srodka ciezkosci obiektu, w ukladzie wspolrzednych, ktorego poczatek znajduje sie
-     *  w lewym gornym narozniku obrazka obiektu.*/
+     *  w lewym gornym narozniku obrazka obiektu.
+     *  @return cY*/
     public int getcY()
     {
         return cY;
     }
 
     /** Setter wspolrzednej y srodka ciezkosci obiektu, w ukladzie wspolrzednych, ktorego poczatek znajduje sie
-     *  w lewym gornym narozniku obrazka obiektu.*/
+     *  w lewym gornym narozniku obrazka obiektu.
+     *  @param cY wartosc ktora ma zostac ustawiona*/
     public void setcY(int cY)
     {
         this.cY = cY;
     }
 
     /** Getter wspolrzednej x srodka ciezkosci obiektu, w ukladzie wspolrzednych, ktorego poczatek znajduje sie
-     * w lewym gornym narozniku obrazka obiektu.*/
+     * w lewym gornym narozniku obrazka obiektu.
+     * @return cX*/
     public int getcX()
     {
         return cX;
     }
 
     /** Getter wspolrzednej x srodka ciezkosci obiektu, w ukladzie wspolrzednych, ktorego poczatek znajduje sie
-     *  w lewym gornym narozniku obrazka obiektu.*/
+     *  w lewym gornym narozniku obrazka obiektu.
+     *  @param cX wartosc ktora ma zostac ustawiona*/
     public void setcX(int cX)
     {
         this.cX = cX;
     }
 
-    /** Getter wspolrzednej x lewego gornego naroznika obrazka obiektu w polu gry .*/
+    /** Getter wspolrzednej x lewego gornego naroznika obrazka obiektu w polu gry.
+     * @return lgX*/
     public int getLgX()
     {
         return lgX;
     }
 
-    /** Getter wspolrzednej y lewego gornego naroznika obrazka obiektu w polu gry .*/
+    /** Getter wspolrzednej y lewego gornego naroznika obrazka obiektu w polu gry.
+     * @return lgY*/
     public int getLgY()
     {
         return lgY;
     }
 
-    /** Setter wspolrzednej x lewego gornego naroznika obrazka obiektu w polu gry .*/
+    /** Setter wspolrzednej x lewego gornego naroznika obrazka obiektu w polu gry.
+     * @param x  wratosc ktora ma zostac ustawiona*/
     public void setLgX(int x)
     {
         this.lgX =x;
     }
 
-    /** Setter wspolrzednej y lewego gornego naroznika obrazka obiektu w polu gry .*/
+    /** Setter wspolrzednej y lewego gornego naroznika obrazka obiektu w polu gry.
+     * @param y  wartosc ktora ma zostac ustawiona*/
     public void setLgY(int y)
     {
         this.lgY =y;
     }
 
-    /** Metoda ta zwraca wartosc pola nazwa obiektu klasy Odpad.*/
+    /** Metoda ta zwraca wartosc pola nazwa obiektu klasy Odpad.
+     * @return nazwa*/
     public String getNazwa()
     {
         return nazwa;
     }
-    /** Metoda ta zwraca wartosc pola typSmiecia obiektu klasy Odpad.*/
+    /** Metoda ta zwraca wartosc pola typSmiecia obiektu klasy Odpad.
+     * @return typSmiecia*/
     public TypySmieci getTyp()
     {
         return this.typSmiecia;
@@ -117,34 +129,35 @@ public class Odpad
     public void setNazwa()
     {
         HashMap<String,String> nazwySmieciMapa= new HashMap<String,String>();
-        nazwySmieciMapa.put("resources/Ości.png","Ości");
-        nazwySmieciMapa.put("resources/ButelkaPET.png","Plastikowa butelka");
-        nazwySmieciMapa.put("resources/ButelkaPoMleku.png","Butelka po mleku");
-        nazwySmieciMapa.put("resources/ButelkaPoPranie.png","Butelka po płynie do prania");
-        nazwySmieciMapa.put("resources/Gazety.png","Gazety");
-        nazwySmieciMapa.put("resources/Jabłko.png","Resztki jabłka");
-        nazwySmieciMapa.put("resources/Karton.png","Karton");
-        nazwySmieciMapa.put("resources/KartonPoSoku.png","Karton po soku");
-        nazwySmieciMapa.put("resources/KubekPoNapojuNaWynos.png","Kubek po napoju na wynos");
-        nazwySmieciMapa.put("resources/MetalowaPuszka1.png","Metalowa puszka");
-        nazwySmieciMapa.put("resources/PapierowaTorba.png","Papierowa torba");
-        nazwySmieciMapa.put("resources/PękniętyKubek.png","Pęknięta ceramika");
-        nazwySmieciMapa.put("resources/PuszkaPoNapoju.png","Puszka po napoju");
-        nazwySmieciMapa.put("resources/PuszkaPoSprayu.png","Puszka po sprayu");
-        nazwySmieciMapa.put("resources/SkorupkiJajka.png","Skorupki jajek");
-        nazwySmieciMapa.put("resources/SkórkaBanana.png","Skórka banana");
-        nazwySmieciMapa.put("resources/Słoik.png","Słoik");
-        nazwySmieciMapa.put("resources/SzklanaButelka1.png","Szklana butelka");
-        nazwySmieciMapa.put("resources/SzklanaButelka2.png","Szklana butelka");
-        nazwySmieciMapa.put("resources/TłustyKartonPoPizzy.png","Karton po pizzy");
-        nazwySmieciMapa.put("resources/ZbitaButelka.png","Zbita szklana butelka");
-        nazwySmieciMapa.put("resources/ZgniecionaKartka.png","Zgnieciona kartka papieru");
+        nazwySmieciMapa.put("res/Ości.png","Ości");
+        nazwySmieciMapa.put("res/ButelkaPET.png","Plastikowa butelka");
+        nazwySmieciMapa.put("res/ButelkaPoMleku.png","Butelka po mleku");
+        nazwySmieciMapa.put("res/ButelkaPoPranie.png","Butelka po płynie do prania");
+        nazwySmieciMapa.put("res/Gazety.png","Gazety");
+        nazwySmieciMapa.put("res/Jabłko.png","Resztki jabłka");
+        nazwySmieciMapa.put("res/Karton.png","Karton");
+        nazwySmieciMapa.put("res/KartonPoSoku.png","Karton po soku");
+        nazwySmieciMapa.put("res/KubekPoNapojuNaWynos.png","Kubek po napoju na wynos");
+        nazwySmieciMapa.put("res/MetalowaPuszka1.png","Metalowa puszka");
+        nazwySmieciMapa.put("res/PapierowaTorba.png","Papierowa torba");
+        nazwySmieciMapa.put("res/PękniętyKubek.png","Pęknięta ceramika");
+        nazwySmieciMapa.put("res/PuszkaPoNapoju.png","Puszka po napoju");
+        nazwySmieciMapa.put("res/PuszkaPoSprayu.png","Puszka po sprayu");
+        nazwySmieciMapa.put("res/SkorupkiJajka.png","Skorupki jajek");
+        nazwySmieciMapa.put("res/SkórkaBanana.png","Skórka banana");
+        nazwySmieciMapa.put("res/Słoik.png","Słoik");
+        nazwySmieciMapa.put("res/SzklanaButelka1.png","Szklana butelka");
+        nazwySmieciMapa.put("res/SzklanaButelka2.png","Szklana butelka");
+        nazwySmieciMapa.put("res/TłustyKartonPoPizzy.png","Karton po pizzy");
+        nazwySmieciMapa.put("res/ZbitaButelka.png","Zbita szklana butelka");
+        nazwySmieciMapa.put("res/ZgniecionaKartka.png","Zgnieciona kartka papieru");
 
         this.nazwa=nazwySmieciMapa.get(this.getSmiecPath());
     }
 
     /** Metoda ta zwraca String, ktorego zawartosc wyznaczana jest na podstawie wartosci pola typSmiecia obiektu klasy Odpad.
-     * Uzywana jest celem wyznaczenia slownego opisu koloru pojemnika do ktorego powinien byc wyrzyucany odpad */
+     * Uzywana jest celem wyznaczenia slownego opisu koloru pojemnika do ktorego powinien byc wyrzyucany odpad
+     * @return kolor pojemnika w String*/
     public String getPojemnikSlowo()
     {
         if (getTyp().equals(TypySmieci.PLASTIK))
@@ -183,34 +196,35 @@ public class Odpad
     private void setTyp()
     {
         HashMap<String,TypySmieci> nazwyTypowMapa = new HashMap<String,TypySmieci>();
-        nazwyTypowMapa.put("resources/Ości.png",TypySmieci.RESZTKOWY);
-        nazwyTypowMapa.put("resources/ButelkaPET.png",TypySmieci.PLASTIK);
-        nazwyTypowMapa.put("resources/ButelkaPoMleku.png",TypySmieci.PLASTIK);
-        nazwyTypowMapa.put("resources/ButelkaPoPranie.png",TypySmieci.PLASTIK);
-        nazwyTypowMapa.put("resources/Gazety.png",TypySmieci.PAPIER);
-        nazwyTypowMapa.put("resources/Jabłko.png",TypySmieci.BIO);
-        nazwyTypowMapa.put("resources/Karton.png",TypySmieci.PAPIER);
-        nazwyTypowMapa.put("resources/KartonPoSoku.png",TypySmieci.PLASTIK);
-        nazwyTypowMapa.put("resources/KubekPoNapojuNaWynos.png",TypySmieci.RESZTKOWY);
-        nazwyTypowMapa.put("resources/MetalowaPuszka1.png",TypySmieci.PLASTIK);
-        nazwyTypowMapa.put("resources/PapierowaTorba.png",TypySmieci.PAPIER);
-        nazwyTypowMapa.put("resources/PękniętyKubek.png",TypySmieci.RESZTKOWY);
-        nazwyTypowMapa.put("resources/PuszkaPoNapoju.png",TypySmieci.PLASTIK);
-        nazwyTypowMapa.put("resources/PuszkaPoSprayu.png",TypySmieci.RESZTKOWY);
-        nazwyTypowMapa.put("resources/SkorupkiJajka.png",TypySmieci.BIO);
-        nazwyTypowMapa.put("resources/SkórkaBanana.png",TypySmieci.BIO);
-        nazwyTypowMapa.put("resources/Słoik.png",TypySmieci.SZKLO);
-        nazwyTypowMapa.put("resources/SzklanaButelka1.png",TypySmieci.SZKLO);
-        nazwyTypowMapa.put("resources/SzklanaButelka2.png",TypySmieci.SZKLO);
-        nazwyTypowMapa.put("resources/TłustyKartonPoPizzy.png",TypySmieci.RESZTKOWY);
-        nazwyTypowMapa.put("resources/ZbitaButelka.png",TypySmieci.SZKLO);
-        nazwyTypowMapa.put("resources/ZgniecionaKartka.png",TypySmieci.PAPIER);
+        nazwyTypowMapa.put("res/Ości.png",TypySmieci.RESZTKOWY);
+        nazwyTypowMapa.put("res/ButelkaPET.png",TypySmieci.PLASTIK);
+        nazwyTypowMapa.put("res/ButelkaPoMleku.png",TypySmieci.PLASTIK);
+        nazwyTypowMapa.put("res/ButelkaPoPranie.png",TypySmieci.PLASTIK);
+        nazwyTypowMapa.put("res/Gazety.png",TypySmieci.PAPIER);
+        nazwyTypowMapa.put("res/Jabłko.png",TypySmieci.BIO);
+        nazwyTypowMapa.put("res/Karton.png",TypySmieci.PAPIER);
+        nazwyTypowMapa.put("res/KartonPoSoku.png",TypySmieci.PLASTIK);
+        nazwyTypowMapa.put("res/KubekPoNapojuNaWynos.png",TypySmieci.RESZTKOWY);
+        nazwyTypowMapa.put("res/MetalowaPuszka1.png",TypySmieci.PLASTIK);
+        nazwyTypowMapa.put("res/PapierowaTorba.png",TypySmieci.PAPIER);
+        nazwyTypowMapa.put("res/PękniętyKubek.png",TypySmieci.RESZTKOWY);
+        nazwyTypowMapa.put("res/PuszkaPoNapoju.png",TypySmieci.PLASTIK);
+        nazwyTypowMapa.put("res/PuszkaPoSprayu.png",TypySmieci.RESZTKOWY);
+        nazwyTypowMapa.put("res/SkorupkiJajka.png",TypySmieci.BIO);
+        nazwyTypowMapa.put("res/SkórkaBanana.png",TypySmieci.BIO);
+        nazwyTypowMapa.put("res/Słoik.png",TypySmieci.SZKLO);
+        nazwyTypowMapa.put("res/SzklanaButelka1.png",TypySmieci.SZKLO);
+        nazwyTypowMapa.put("res/SzklanaButelka2.png",TypySmieci.SZKLO);
+        nazwyTypowMapa.put("res/TłustyKartonPoPizzy.png",TypySmieci.RESZTKOWY);
+        nazwyTypowMapa.put("res/ZbitaButelka.png",TypySmieci.SZKLO);
+        nazwyTypowMapa.put("res/ZgniecionaKartka.png",TypySmieci.PAPIER);
 
         this.typSmiecia =nazwyTypowMapa.get(this.getSmiecPath());
     }
 
     /** Metoda ta na podstawie wartosci pola wylosowanyNumer obiektu zwraca String,
-     *  bedacy sciezka do pliku graficznego zawierajacego obrazek odpadu wyswietlany w  polu gry lub sluzacy do okreslenia nazwy, typu odpadu.*/
+     *  bedacy sciezka do pliku graficznego zawierajacego obrazek odpadu wyswietlany w  polu gry lub sluzacy do okreslenia nazwy, typu odpadu.
+     *  @return sciezka do pliku*/
     public String getSmiecPath()
     {
 
@@ -218,70 +232,70 @@ public class Odpad
         switch(this.wylosowanyNumer)
         {
             case 0:
-                smiecImagePath="resources/Ości.png";
+                smiecImagePath="res/Ości.png";
                 break;
             case 1:
-                smiecImagePath="resources/ButelkaPET.png";
+                smiecImagePath="res/ButelkaPET.png";
                 break;
             case 2:
-                smiecImagePath="resources/ButelkaPoMleku.png";
+                smiecImagePath="res/ButelkaPoMleku.png";
                 break;
             case 3:
-                smiecImagePath="resources/ButelkaPoPranie.png";
+                smiecImagePath="res/ButelkaPoPranie.png";
                 break;
             case 4:
-                smiecImagePath="resources/Gazety.png";
+                smiecImagePath="res/Gazety.png";
                 break;
             case 5:
-                smiecImagePath="resources/Jabłko.png";
+                smiecImagePath="res/Jabłko.png";
                 break;
             case 6:
-                smiecImagePath="resources/Karton.png";
+                smiecImagePath="res/Karton.png";
                 break;
             case 7:
-                smiecImagePath="resources/KartonPoSoku.png";
+                smiecImagePath="res/KartonPoSoku.png";
                 break;
             case 8:
-                smiecImagePath="resources/KubekPoNapojuNaWynos.png";
+                smiecImagePath="res/KubekPoNapojuNaWynos.png";
                 break;
             case 9:
-                smiecImagePath="resources/MetalowaPuszka1.png";
+                smiecImagePath="res/MetalowaPuszka1.png";
                 break;
             case 10:
-                smiecImagePath="resources/PapierowaTorba.png";
+                smiecImagePath="res/PapierowaTorba.png";
                 break;
             case 11:
-                smiecImagePath="resources/PękniętyKubek.png";
+                smiecImagePath="res/PękniętyKubek.png";
                 break;
             case 12:
-                smiecImagePath="resources/PuszkaPoNapoju.png";
+                smiecImagePath="res/PuszkaPoNapoju.png";
                 break;
             case 13:
-                smiecImagePath="resources/PuszkaPoSprayu.png";
+                smiecImagePath="res/PuszkaPoSprayu.png";
                 break;
             case 14:
-                smiecImagePath="resources/SkorupkiJajka.png";
+                smiecImagePath="res/SkorupkiJajka.png";
                 break;
             case 15:
-                smiecImagePath="resources/SkórkaBanana.png";
+                smiecImagePath="res/SkórkaBanana.png";
                 break;
             case 16:
-                smiecImagePath="resources/Słoik.png";
+                smiecImagePath="res/Słoik.png";
                 break;
             case 17:
-                smiecImagePath="resources/SzklanaButelka1.png";
+                smiecImagePath="res/SzklanaButelka1.png";
                 break;
             case 18:
-                smiecImagePath="resources/SzklanaButelka2.png";
+                smiecImagePath="res/SzklanaButelka2.png";
                 break;
             case 19:
-                smiecImagePath="resources/TłustyKartonPoPizzy.png";
+                smiecImagePath="res/TłustyKartonPoPizzy.png";
                 break;
             case 20:
-                smiecImagePath="resources/ZbitaButelka.png";
+                smiecImagePath="res/ZbitaButelka.png";
                 break;
             case 21:
-                smiecImagePath="resources/ZgniecionaKartka.png";
+                smiecImagePath="res/ZgniecionaKartka.png";
                 break;
             default:
                 smiecImagePath="";

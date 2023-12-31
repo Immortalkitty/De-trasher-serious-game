@@ -7,7 +7,6 @@ import javax.swing.*;
 
 /**
  * Gra edukacyjna o segregacji odpadow. Klasa glowna cyklicznie tworzaca okna zawierajace panel gry oraz panel menu.
- *
  * @author Katarzyna Szczerba
  */
 
@@ -42,7 +41,8 @@ public class Detrasher extends JFrame{
         panelGry.spadekStart();
         setFocusIWymienInformacjePanele(panelGry,panelMenu);
     }
-    /** Getter statycznego pola klasy Detrasher- nick */
+    /** Getter statycznego pola klasy Detrasher- nick
+     * @return nick*/
     public static String getNick()
     {
         return nick;
@@ -153,7 +153,8 @@ public class Detrasher extends JFrame{
     }
 
 /** Metoda uruchamia gre. Dzieki niej kiedy spadajacy obiekt dotrze do konca planszy,
- *  caly cykl gry jest powtarzany az do zakonczenia gry.*/
+ *  caly cykl gry jest powtarzany az do zakonczenia gry.
+ *  @param args nieuzywane*/
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable()
         {

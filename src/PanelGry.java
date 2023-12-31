@@ -6,32 +6,62 @@ import java.util.*;
 import javax.imageio.*;
 import javax.swing.*;
 import javax.swing.Timer;
-
 import static java.awt.Font.BOLD;
 
-/* TODO
-*   ladniejsze fonty, kolory, nowe smieci
-*  wyswietlanie wersji menuzeby serio nie przekroczyli inata */
-
-//cur od current
+/**Klasa odpowiedzialna za wyswietlanie grywalnego pola. Daje mozliwosc sterowania spadajacym odpadem, zdobywanie punktow, tracenie szans.*/
 public class PanelGry extends JPanel {
 
+    /**Opoznienie timera taktujacego cykle odswiezania gry. */
     private int interwalGry;
+
+    /**Timer taktujacy spadanie obiektu, odmalowywanie panelu gry.*/
     private Timer timer;
+
+    /**Okresla czy gra jest w stanie pauzy.*/
     private boolean czyPausa;
+
+    /**Liczy dobre przyporzadkowania odpadow do kosza. Stanowi wynik punktowy gracza.*/
     private static int dobrePrzyporzadkowanieLicznik ;
+
+    /**Przechowuje obiekt ktory aktualnie znajduje sie w panelu gry, mozna nim sterowac, spada.*/
     private Odpad curOdpad;
+
+    /**Pole liczace pomylki gracza w przyporzadkowywaniu odpadow do odpowiednich pojemnikow.*/
     private static int szanse;
+
+    /**Pole do przechowywania obrazu aktualnego odpadu wystepujacego w panelu gry.*/
     private BufferedImage smiecImage=null;
+
+    /**Pole do przechowywania obrazu tla panelu gry.*/
     private BufferedImage tloImage=null;
+
+    /**Jaki byl poprzedni stan pola dobrePrzyporzadkowanieLicznik, w ktorym dokonano przyspieszenia gry.
+     *  Zapobiega wielokrotnemu przyspieszeniu gry w przypadku gdy gracz nie zdobedzie punktu,a  straci szanse.*/
     private int poprzedniIndeksPrzyspieszenia;
+
+    /**Pole okreslajace czy gra zostala zakonczona.*/
     private boolean czyGraSkonczona;
+
+    /**Ile pikseli odpowiada jednemu ruchowi w poziomie*/
     private int ruchPoziomy;
+
+    /**Jaka jest wspolrzedna y linii w pikselach liczonych od lewego gornego rogu panelu, po ktorej przekorczeniu nastepuje sprawdzenie dopasowania odpadu do odpowiedniego kosza.*/
     private int liniaSprawdzenia;
+
+    /**Ile pikseli odpowiada jednemu ruchowi w pionie.*/
     private int ruchPion;
+
+    /**Szerokosc pozioma kosza w piskselach.*/
     private int szerKosza;
+
+   /**Co ile poprawnych przyporzadkowan odpadow gra ma zostac przyspieszona.*/
     private int coIlePrzyspiesz;
 
+    /**Konstruktor obiektu klasy PanelGry. Definiuje wartosc pol szanse, dobrePrzyporzadkowanieLicznik, poprzedniIndeksPrzyspieszenia,
+     *  ruchPoziomy, liniaSprawdzenia, ruchPion, szerKosza, coIlePrzyspiesz, czyPausa, interwalGry. Wykonuje inicjalizacje komponentow panelu,
+     *  ustawia stan czyGraSkonczona na false, tworzy nowy timer, ktorego listenerem jest obiekt wewnetrznej klasy pomocnicznej CyklGry,
+     *  a opoznieniem wartosc pola interwalGry. Dodaje panelowi sluchacz przyciskow klawiatury. Te wykryte odpowiednio wydarzenia wznawiaja,
+     *  zatrzymuja gre lub wykonuja probe poruszenia spadajacego obiektu w prawo lub lewo. Wczytuje obrazek tla gry do pola tloImage.  */
     public PanelGry() {
 
         szanse=3;
@@ -56,14 +86,12 @@ public class PanelGry extends JPanel {
 
                 int keycode = e.getKeyCode();
 
-                switch (keycode) {
-
+                switch (keycode)
+                {
                     case KeyEvent.VK_P -> pausa();
                     case KeyEvent.VK_ENTER -> wznowienie();
                     case KeyEvent.VK_LEFT -> sprobujRuszyc( curOdpad.getLgX() - 1*ruchPoziomy, curOdpad.getLgY());
                     case KeyEvent.VK_RIGHT -> sprobujRuszyc(curOdpad.getLgX()+1*ruchPoziomy, curOdpad.getLgY());
-
-
                 }
             }
 
@@ -71,32 +99,37 @@ public class PanelGry extends JPanel {
 
         try
         {
-            tloImage = ImageIO.read(new File("resources/Tło-detrasher.jpg"));
+            tloImage = ImageIO.read(new File("res/Tło-detrasher.jpg"));
         }
         catch (IOException e)
         {
             throw new RuntimeException(e);
         }
-
     }
 
+    /** @return wartosc statycznego pola szanse*/
     public static int getSzanse() {
         return szanse;
     }
 
+    /** @return wartosc statycznego pola dobrePrzyporzadkowanieLicznik*/
     public static int getDobrePrzyporzadkowanieLicznik(){
         return dobrePrzyporzadkowanieLicznik;
 
     }
 
+    /** @return wartosc pola czyGraSkonczona*/
     public boolean getCzyGraSkonczona() {
         return czyGraSkonczona;
     }
 
+    /**Metoda ustawia wartosc pola czyGraSkonczona na zadana.
+     * @param czyGraSkonczona zadany stan */
     public void setCzyGraSkonczona(boolean czyGraSkonczona){
         this.czyGraSkonczona=czyGraSkonczona;
     }
 
+    /**Metoda ustawia odpowiedni wyglad, rozklad panelu gry. */
     private void initUIPoleGry()
     {
         setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
@@ -118,42 +151,54 @@ public class PanelGry extends JPanel {
 
     }
 
+    /**Metoda wczytuje nowy obiekt odpadu, restartuje timer dyktujacy predkosc spadku obiektow.*/
     public void spadekStart()
     {
         wczytajNowyOdpad();
         timer.restart();
     }
 
+  /**Metoda zatrzymujaca gre, jesli nie jest w stanie zatrzymania. Odmalowuje panel. */
    public void pausa()
    {
-        if (czyPausa==false)
+        if (!getCzyPausa())
         {
             czyPausa=true;
             repaint();
         }
 
     }
+    /**Metoda sprawdzajaca czy gra jest w stanie pauzy.
+     * @return true jesli pole czyPausa jest true, false w przeciwnym wypadku.*/
     public boolean getCzyPausa()
     {
         if (czyPausa==true) return true;
         else return false;
     }
+    /**Metoda wywolujaca wznowienie gry. Jesli byla w stanie pauzy, ustawia pole czyPausa=false i odmalowuje panel gry.*/
     public void wznowienie()
     {
-        if (czyPausa==true)
+        if (getCzyPausa())
         {
             czyPausa=false;
             repaint();
         }
     }
-
+    /**
+     * Nadpisuje metode odpowiedzialna za odrysowanie panelu - wlasne wypelnienie
+     * pola graficznego.
+     * @param g obiekt graficzny
+     */
     @Override
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
         rysuj(g);
     }
-
+/**Metoda rysujaca tlo panelu gry, aktualny obrazek obiektu curOdpad w odpowiednim jego polozeniu.
+ * W przypadku konca gry, rysuje odpowiedni tekst na panelu.
+ * W przypadku pauzy, rysuje odpowiedni tekst na panelu.
+ * @param g obiekt graficzny*/
     private void rysuj(Graphics g)
     {
         g.drawImage(tloImage, 0, 0, null);
@@ -179,7 +224,13 @@ public class PanelGry extends JPanel {
 
 
     }
-
+/**Metoda zmieniajaca polozenie obiektu curOdpad w przypadku gdy nie przekracza on dozwolonych barier planszy,
+ *  tj. prawego, lewego kranca okna i linii sprawdzenia.
+ *  Przyjmuje:
+ *  @param newY wspolrzedna y, jaka jesli to mozliwe ma byc ustawiona jako wspolrzedna lewego gornego naroznika obrazka obiektu odpadku.
+ *  @param newX wspolrzedna x, jaka jesli to mozliwe ma byc ustawiona jako wspolrzedna lewego gornego naroznika obrazka obiektu odpadku
+ *  @return true jesli udalo sie ustawic zadane wspolrzedne,
+ *  false jesli nie ustawiono zadanych wspolrzednych a jakies inne zdefiniownae wewnatrz warunkow metody*/
     public boolean sprobujRuszyc(int newX, int newY)
     {
         if (czyPausa==true)
@@ -217,6 +268,7 @@ public class PanelGry extends JPanel {
         return true;
     }
 
+/** Klasa pomocnicza sluzaca do implementacji petli gry. Wykonuje akcje graWToku().*/
     private class CyklGry implements ActionListener
     {
         @Override
@@ -225,16 +277,25 @@ public class PanelGry extends JPanel {
             graWToku();
         }
     }
-
-    public void wyswietlTablicaWynikow(String infoMessage, String titleBar)
+    /**Metoda wyswietla zcustomizowany OptionDialog z JOptionPane, ktory zawiera JTextArea, zaprojektowany do wyswietlania tablicy najwyzszych wynikow.
+     * Przyjmuje:
+     * @param info tekst ktory zostanie wyswietlony w JTextArea oprocz predefiniowanego tekstu.
+     * @param tytul tytul na belce komunikatu
+     * .*/
+    public void wyswietlTablicaWynikow(String info, String tytul)
     {
-        JTextArea text=new JTextArea("Oto najwyższe z uzyskanych wyników! \n\n"+infoMessage);
+        JTextArea text=new JTextArea("Oto najwyższe z uzyskanych wyników! \n\n"+info);
         text.setFont(new Font("Segoe UI", BOLD, 18));
         text.setForeground(new Color(168, 52, 235));
         text.setEditable(false);
-        JOptionPane.showMessageDialog(null, text,titleBar, JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(null, text,tytul, JOptionPane.PLAIN_MESSAGE);
     }
 
+    /**Metoda wyswietla zcustomizowany OptionDialog z JOptionPane, wskazowke o zadanej tekstowej tresci i tytule.
+     *  Definiuje opcje wyboru dostepne w komunikacie. Przyjmuje:
+     * @param info tekst ktory zostanie wyswietlony w JTextArea
+     * @param tytul tytul na belce komunikatu
+     * @return a numer wybranej w oknie komunikatu opcji.*/
     public int wyswietlWskazowke(String info, String tytul)
     {
         JTextArea text=new JTextArea(info);
@@ -367,7 +428,8 @@ public class PanelGry extends JPanel {
 
         this.wyswietlTablicaWynikow(informacjaWyniki,"Gratulacje!");
     }
-
+/**Metoda wykonuje sekwencje akcji wlasciwych dla konca gry. Zatrzymuje ja, wykonuje setCzyGraSkonczona(true), odmalowuje panel,
+ *  zapisuje wyniki punktowe do pliku i wyswietla tablice najwyzszych wynikow. */
     private void koniecGry()
     {
         czyPausa=true;
@@ -375,6 +437,8 @@ public class PanelGry extends JPanel {
         repaint();
         TablicaWynikowZPliku("Detrasher_wyniki.txt",5);
     }
+    /**Metoda ustawiajaca odpowiednie wartosci polom obiektu klasy PanelGry,
+     *  tak aby zgadzaly sie z ich stanem tuz po uruchomieniu programu. Wykonuje spadekStart(). */
     public void restartGry(){
         PanelGry.szanse=3;
         setCzyGraSkonczona(false);
@@ -385,6 +449,8 @@ public class PanelGry extends JPanel {
 
         spadekStart();
     }
+    /**Metoda wykonujaca updateGry() i ponowne namalowanie panelu w przypadku gdy pole czyPausa jest falszem.
+     *  Jesli gra jest zatrzymana jedynie odmalowuje panel. Dokonuje sprawdzenia czy gracz stracil wszystkie szanse, jesli tak wykonuje koniecGry().*/
     private void graWToku()
     {
        if (czyPausa==false)
@@ -400,13 +466,12 @@ public class PanelGry extends JPanel {
        {
            repaint();
        }
-
-
     }
-
+/**Metoda odpowiedzialna za postep gry. Porusza obiektem curOdpad w dol w pionie.
+ *  W przypadku dotarcia obiektu do linii sprawdzenia przyporzadkowania odpadu wykonuje metode sprawdzCzyDobryKosz(curOdpad).
+ *  Realizuje przyspieszenie aktualizowania planszy zwiekszajc wartosc pola interwalGry w okreslonych warunkach.*/
     private void updateGry()
     {
-
         if ((curOdpad.getLgY()+curOdpad.getcY())<liniaSprawdzenia) //srodek ciezkosci obiektu przekorczy dana linie w y
         {
             curOdpad.setLgY(curOdpad.getLgY()+ruchPion); //spadanie
@@ -426,11 +491,14 @@ public class PanelGry extends JPanel {
         }
 
     }
-    private void setInterwalGry(int nowyInterwal){
+    /**Metoda zmienia wartosc pola interwalGry obiektu. Przyjmuje:
+     * @param nowyInterwal wartosc ktora ma zostac wpisana do pola obiektu klasy PanelGry*/
+    private void setInterwalGry(int nowyInterwal)
+    {
         this.interwalGry=nowyInterwal;
     }
 
-
+/**Metoda tworzy nowy obiekt klasy Odpad i przypisuje go do pola obiektu PanelGry curOdpad. Ustawia jego polozenie na planszy, wczytuje obrazek.*/
     private void wczytajNowyOdpad()
     {
         curOdpad = new Odpad();
@@ -448,7 +516,10 @@ public class PanelGry extends JPanel {
         }
     }
 
-
+/**Metoda dokonuje sprawdzenia czy obiekt klasy Odpad ma odpowiednie polozenie na planszy w poziomie po przekoczeniu lini sprawdzania w pionie.
+ *  Jesli tak, inkrementowany jest dobrePrzyporzadkowanieLicznik, w przeciwnym razie wykonywana jest metoda zleDopasowano(Odpad o).
+ *  Przyjmuje:
+ *  @param o obiekt ktorego polozenie, typ jest sprawdzany*/
     private void sprawdzCzyDobryKosz(Odpad o)
     {
         switch((o.getLgX()+o.getcX())/szerKosza)
@@ -465,6 +536,7 @@ public class PanelGry extends JPanel {
                 }
             }
             break;
+
             case 3:
             {
                 if(o.getTyp().equals(Odpad.TypySmieci.SZKLO))
@@ -490,6 +562,7 @@ public class PanelGry extends JPanel {
                 }
             }
             break;
+
             case 1:
             {
                 if(o.getTyp().equals(Odpad.TypySmieci.PAPIER))
@@ -502,6 +575,7 @@ public class PanelGry extends JPanel {
                 }
             }
             break;
+
             case 0:
             {
                 if(o.getTyp().equals(Odpad.TypySmieci.BIO))
@@ -517,7 +591,11 @@ public class PanelGry extends JPanel {
         }
 
     }
-
+/** Metoda wykonujaca sekwencje akcji w przypadku gdy odpad po dotarciu do lini sprawdzenia dopasowany zostal nieprawidlowo.
+ *  Zmniejsza szanse klasy PanelGry, zatrzymuje gre, wyswietla wskazowke gdzie obiekt powinien trafic.
+ *  W zaleznosci od wyboru przycisku w komunikacie wznawia gre lub pozostawia ja w stanie pauzy.
+ *  Przyjmuje:
+ *  @param o zalezy od niego tresc wyswietlonej wskazowki*/
     public void zleDopasowano(Odpad o)
     {
         int i;

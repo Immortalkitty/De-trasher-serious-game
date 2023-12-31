@@ -31,7 +31,7 @@ public class PanelMenu extends JPanel {
     /** Przycisk odpowiedzialny za resetowanie wyniku i ustawien gry do poczatkowych.*/
     private JButton restartButton;
     
-   /** Konstruktor, który tworzy GUI oraz timer panelu menu, który odpowiedzialny jest za odświeżanie wyniku punktowego oraz szans w grze.*/
+   /** Konstruktor, ktory tworzy GUI oraz timer panelu menu, ktory odpowiedzialny jest za odswiezanie wyniku punktowego oraz szans w grze.*/
     public PanelMenu(){
         initUIMenu();
         int interwalMenu = 300;
@@ -45,15 +45,18 @@ public class PanelMenu extends JPanel {
         timerMenu.start();
 
     }
-/** Metoda zwraca obiekt restartButton bedacy atrybutem obiektu klasy PanelMenu.*/
+/** Metoda zwraca obiekt restartButton bedacy atrybutem obiektu klasy PanelMenu.
+ * @return restartButton*/
     public JButton getRestartButton() {
         return restartButton;
     }
-    /** Metoda zwraca obiekt menuButton bedacy atrybutem obiektu klasy PanelMenu.*/
+    /** Metoda zwraca obiekt menuButton bedacy atrybutem obiektu klasy PanelMenu.
+     * @return menuButton*/
     public JButton getMenuButton() {
         return menuButton;
     }
-    /** Metoda zwraca obiekt zakonczButton bedacy atrybutem obiektu klasy PanelMenu.*/
+    /** Metoda zwraca obiekt zakonczButton bedacy atrybutem obiektu klasy PanelMenu.
+     * @return zakonczButton*/
     public JButton getZakonczButton() {
         return zakonczButton;
     }
@@ -103,7 +106,7 @@ public class PanelMenu extends JPanel {
      *  Przyjmuje:
      *  @param menuPrzycisk glowny przycisk zmieniajacy wersje menu i zatrzymujacy gre
      *  @param panelSzans panel odwzorowujacy sznase gracza
-     *  @param punktacjaLabel etykieta wyswietlajaca pole klasy Detrasher dobrePrzyporzadkowaniaLicznik
+     *  @param punktacjaLabel etykieta wyswietlajaca pole klasy PanelGry dobrePrzyporzadkowaniaLicznik
      *  @param szanseLabel etykieta bedaca alternatywa dla graficznego wyswietlania szans */
     public void setMenuAWyglad(JButton menuPrzycisk,JLabel punktacjaLabel,JPanel panelSzans,JLabel szanseLabel)
     {
@@ -182,7 +185,7 @@ public class PanelMenu extends JPanel {
     }
 
     /** Metoda ta przeksztalca obiekt klasy PanelMenu z wyswietlajacego menu w wersji A na menu w wersji B.
-     *  Od panelu odpina niepotrzebne poprzednie komponenty i dodaje inne w innym rozkladzie(pozostaje przycisk menuButton o
+     *  Od panelu odpina niepotrzebne poprzednie komponenty i dodaje inne w innym rozkladzie (pozostaje przycisk menuButton o
      *  zmienionych wlasciwosciach), tj. przycisk informacjaButton, zakonczButton, restartButton, zmienNickButton.*/
     public void konwertujNaMenuWersjaB()
     {

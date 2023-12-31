@@ -17,7 +17,7 @@ public class PanelSzans extends JPanel
         GwiazdkaImage = null;
         try
         {
-            GwiazdkaImage = ImageIO.read(new File("resources/Gwiazdka.png"));
+            GwiazdkaImage = ImageIO.read(new File("res/Gwiazdka.png"));
         }
         catch (IOException e)
         {
@@ -26,9 +26,9 @@ public class PanelSzans extends JPanel
 
     }
     /**
-     * Nadpisuje metodę odpowiedzialną za odrysowanie panelu - własne wypełnienie
+     * Nadpisuje metode odpowiedzialna za odrysowanie panelu - wlasne wypelnienie
      * pola graficznego.
-     * @param g
+     * @param g obiekt graficzny
      */
     public void paintComponent(Graphics g)
     {
