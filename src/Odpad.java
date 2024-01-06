@@ -41,7 +41,7 @@ public class Odpad
     {
 
         Random losujSmiec= new Random();
-        wylosowanyNumer= losujSmiec.nextInt(0,21);
+        wylosowanyNumer= losujSmiec.nextInt(0,25);
         this.setTyp();
         this.setNazwa();
         this.lgX=500;
@@ -151,6 +151,11 @@ public class Odpad
         nazwySmieciMapa.put("res/TłustyKartonPoPizzy.png","Karton po pizzy");
         nazwySmieciMapa.put("res/ZbitaButelka.png","Zbita szklana butelka");
         nazwySmieciMapa.put("res/ZgniecionaKartka.png","Zgnieciona kartka papieru");
+        nazwySmieciMapa.put("res/ResztkiMarchewki.png","Resztki marchewki");
+        nazwySmieciMapa.put("res/SkórkaMandarynki.png","Skórka mandarynki");
+        nazwySmieciMapa.put("res/StareLiście.png","Liście");
+        nazwySmieciMapa.put("res/Burak.png","Resztki buraka");
+
 
         this.nazwa=nazwySmieciMapa.get(this.getSmiecPath());
     }
@@ -218,6 +223,10 @@ public class Odpad
         nazwyTypowMapa.put("res/TłustyKartonPoPizzy.png",TypySmieci.RESZTKOWY);
         nazwyTypowMapa.put("res/ZbitaButelka.png",TypySmieci.SZKLO);
         nazwyTypowMapa.put("res/ZgniecionaKartka.png",TypySmieci.PAPIER);
+        nazwyTypowMapa.put("res/ResztkiMarchewki.png",TypySmieci.BIO);
+        nazwyTypowMapa.put("res/SkórkaMandarynki.png",TypySmieci.BIO);
+        nazwyTypowMapa.put("res/StareLiście.png",TypySmieci.BIO);
+        nazwyTypowMapa.put("res/Burak.png",TypySmieci.BIO);
 
         this.typSmiecia =nazwyTypowMapa.get(this.getSmiecPath());
     }
@@ -238,7 +247,7 @@ public class Odpad
                 smiecImagePath="res/ButelkaPET.png";
                 break;
             case 2:
-                smiecImagePath="res/ButelkaPoMleku.png";
+                smiecImagePath="res/StareLiście.png";
                 break;
             case 3:
                 smiecImagePath="res/ButelkaPoPranie.png";
@@ -286,7 +295,7 @@ public class Odpad
                 smiecImagePath="res/SzklanaButelka1.png";
                 break;
             case 18:
-                smiecImagePath="res/SzklanaButelka2.png";
+                smiecImagePath="res/Burak.png";
                 break;
             case 19:
                 smiecImagePath="res/TłustyKartonPoPizzy.png";
@@ -296,6 +305,18 @@ public class Odpad
                 break;
             case 21:
                 smiecImagePath="res/ZgniecionaKartka.png";
+                break;
+            case 22:
+                smiecImagePath="res/ResztkiMarchewki.png";
+                break;
+            case 23:
+                smiecImagePath="res/SkórkaMandarynki.png";
+                break;
+            case 24:
+                smiecImagePath="res/SzklanaButelka2.png";
+                break;
+            case 25:
+                smiecImagePath="res/ButelkaPoMleku.png";
                 break;
             default:
                 smiecImagePath="";

@@ -81,23 +81,18 @@ public class Detrasher extends JFrame{
                 if(licznikMenu%2==0)
                 {
                     m.konwertujNaMenuWersjaB();
-                   // if(2 >= licznikMenu) licznikMenu = 0;
-                   /*
-                    if (1 == licznikMenu)
-                        licznikMenu = 0;
-                    else
-                        licznikMenu = 1;
-                   */
+                    licznikMenu++;
                 }
                 else
                 {
                     m.konwertujNaMenuWersjaA();
+                    licznikMenu--;
                 }
 
                 m.repaint();
                 m.getMenuButton().setFocusable(false);//rozwiazanie problemu z brakiem mozliwosci sterowania w panelu gry,
                 // tymczasowe zdjecie focusa z przycisku
-                licznikMenu++;
+
             }
         });
 

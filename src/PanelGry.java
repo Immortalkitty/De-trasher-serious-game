@@ -208,15 +208,15 @@ public class PanelGry extends JPanel {
         if (getCzyGraSkonczona())
         {
             String s="Koniec Gry";
-            g.setFont(new Font("serif", BOLD, 60));
-            g.setColor(Color.RED);
+            g.setFont(new Font("Tw Cen MT", Font.BOLD, 66));
+            g.setColor(new Color(168, 52, 235));
             g.drawString(s, getWidth() / 2 - g.getFontMetrics().stringWidth(s) / 2,
                     getHeight() / 2 - g.getFontMetrics().getHeight() / 2);
         }
         if(czyPausa&(!getCzyGraSkonczona()))
         {
             String s="Pauza";
-            g.setFont(new Font("serif", BOLD, 60));
+            g.setFont(new Font("Tw Cen MT", Font.BOLD, 66));
             g.setColor(new Color(53, 128, 60, 254));
             g.drawString(s, getWidth() / 2 - g.getFontMetrics().stringWidth(s) / 2,
                     getHeight() / 2 - g.getFontMetrics().getHeight() / 2);
@@ -285,7 +285,8 @@ public class PanelGry extends JPanel {
     public void wyswietlTablicaWynikow(String info, String tytul)
     {
         JTextArea text=new JTextArea("Oto najwyższe z uzyskanych wyników! \n\n"+info);
-        text.setFont(new Font("Segoe UI", BOLD, 18));
+        text.setFont(new Font("Tw Cen MT", Font.PLAIN, 24));
+        text.setBackground(new Color(255, 153, 0, 189));
         text.setForeground(new Color(168, 52, 235));
         text.setEditable(false);
         JOptionPane.showMessageDialog(null, text,tytul, JOptionPane.PLAIN_MESSAGE);
@@ -299,8 +300,9 @@ public class PanelGry extends JPanel {
     public int wyswietlWskazowke(String info, String tytul)
     {
         JTextArea text=new JTextArea(info);
-        text.setFont(new Font("Segoe UI", BOLD, 18));
-        text.setForeground(new Color(52, 144, 235));
+        text.setFont(new Font("Tw Cen MT", Font.PLAIN, 24));
+        text.setForeground(new Color(168, 52, 235));
+        text.setBackground(new Color(255, 175, 225));
         text.setEditable(false);
         String[] opcje = { "OK, gramy dalej", "daj mi chwilę" };
         int a=JOptionPane.showOptionDialog(null, text, tytul,0, -1,null, opcje,opcje[0]);

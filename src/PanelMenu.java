@@ -2,8 +2,11 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.*;
-import java.awt.event.*;
-import static java.awt.Font.BOLD;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 
 /** Klasa wyswietlajaca panel menu graficznego gry i umozliwiajaca sterowanie programem przez uzytkownika.*/
 
@@ -111,13 +114,14 @@ public class PanelMenu extends JPanel {
     public void setMenuAWyglad(JButton menuPrzycisk,JLabel punktacjaLabel,JPanel panelSzans,JLabel szanseLabel)
     {
         setBackground(new Color(255, 153, 0));
-        setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
         setMinimumSize(new Dimension(1000, 100));
         setPreferredSize(new Dimension(1000, 100));
         setLayout(new GridLayout(1, 3, 40, 40));
 
-        menuPrzycisk.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        menuPrzycisk.setFont(new Font("Tw Cen MT", Font.PLAIN, 28));
         menuPrzycisk.setText("Menu");
+        menuPrzycisk.setForeground(new Color(168, 52, 235));
         menuPrzycisk.setAlignmentY(20.0F);
         menuPrzycisk.setContentAreaFilled(false);
         menuPrzycisk.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -127,7 +131,8 @@ public class PanelMenu extends JPanel {
 
         add(menuPrzycisk);
 
-        punktacjaLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        punktacjaLabel.setFont(new Font("Tw Cen MT", Font.PLAIN, 28));
+        punktacjaLabel.setForeground(new Color(168, 52, 235));
         punktacjaLabel.setHorizontalAlignment(SwingConstants.CENTER);
         punktacjaLabel.setText("Punkty: 0");
         punktacjaLabel.setAlignmentX(40.0F);
@@ -141,7 +146,7 @@ public class PanelMenu extends JPanel {
 
         panelSzans.setBackground(new Color(255, 153, 0));
 
-        szanseLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18)); // NOI18N
+        szanseLabel.setFont(new Font("Tw Cen MT", Font.PLAIN, 24));
         szanseLabel.setText("");
 
         szanseLabel.setVerticalAlignment(SwingConstants.TOP);
@@ -175,7 +180,7 @@ public class PanelMenu extends JPanel {
     public void wyswietlInfoBox(String wiadomosc, String tytul)
     {
         JTextArea text=new JTextArea(wiadomosc);
-        text.setFont(new Font("Segoe UI", BOLD, 18));
+        text.setFont(new Font("Tw Cen MT", Font.BOLD, 24));
 
         text.setForeground(new Color(168, 52, 235));
         text.setBackground(new Color(255, 153, 0, 179));
@@ -193,45 +198,50 @@ public class PanelMenu extends JPanel {
         remove(szanseLabel);
         remove(punktacjaLabel);
 
-        setBackground(new java.awt.Color(255, 153, 0));
-        setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        setMinimumSize(new java.awt.Dimension(1000, 200));
-        setPreferredSize(new java.awt.Dimension(1000, 200));
-        setLayout(new java.awt.GridLayout(1, 3, 40, 40));
+        setBackground(new Color(255, 153, 0));
+        setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
+        setMinimumSize(new Dimension(1000, 200));
+        setPreferredSize(new Dimension(1000, 200));
+        setLayout(new GridLayout(1, 3, 40, 40));
 
-        menuButton.setBackground(new java.awt.Color(255, 153, 0));
-        menuButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 18));
+        menuButton.setBackground(new Color(255, 153, 0));
+        menuButton.setFont(new Font("Tw Cen MT", Font.PLAIN, 24));
+        menuButton.setForeground(new Color(168, 52, 235));
         menuButton.setText("Powrót");
         menuButton.setAlignmentY(20.0F);
         menuButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         menuButton.setContentAreaFilled(false);
         menuButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        menuButton.setMaximumSize(new java.awt.Dimension(75, 20));
-        menuButton.setMinimumSize(new java.awt.Dimension(75, 20));
-        menuButton.setPreferredSize(new java.awt.Dimension(75, 20));
+        menuButton.setMaximumSize(new Dimension(75, 20));
+        menuButton.setMinimumSize(new Dimension(75, 20));
+        menuButton.setPreferredSize(new Dimension(75, 20));
         add(menuButton);
 
-        informacjaButton.setBackground(new java.awt.Color(255, 153, 0));
-        informacjaButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 18));
+        informacjaButton.setBackground(new Color(255, 153, 0));
+        informacjaButton.setFont(new Font("Tw Cen MT", Font.PLAIN, 24));
+        informacjaButton.setForeground(new Color(168, 52, 235));
         informacjaButton.setText("O grze");
         informacjaButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         add(informacjaButton);
 
-        zakonczButton.setBackground(new java.awt.Color(255, 153, 0));
-        zakonczButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 18));
-        zakonczButton.setText("Zapisz wynik i wyjdź");
+        zakonczButton.setBackground(new Color(255, 153, 0));
+        zakonczButton.setFont(new Font("Tw Cen MT", Font.PLAIN, 24));
+        zakonczButton.setForeground(new Color(168, 52, 235));
+        zakonczButton.setText("Zapisz i wyjdź");
         zakonczButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED));
         add(zakonczButton);
 
-        restartButton.setBackground(new java.awt.Color(255, 153, 0));
-        restartButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 18)); // NOI18N
+        restartButton.setBackground(new Color(255, 153, 0));
+        restartButton.setFont(new Font("Tw Cen MT", Font.PLAIN, 24));
         restartButton.setText("Restart gry");
+        restartButton.setForeground(new Color(168, 52, 235));
         restartButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         add(restartButton);
 
-        zmienNickButton.setBackground(new java.awt.Color(255, 153, 0));
-        zmienNickButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 18)); // NOI18N
+        zmienNickButton.setBackground(new Color(255, 153, 0));
+        zmienNickButton.setFont(new Font("Tw Cen MT", Font.PLAIN, 24));
         zmienNickButton.setText("Zmień swój nick");
+        zmienNickButton.setForeground(new Color(168, 52, 235));
         zmienNickButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         add(zmienNickButton);
     }

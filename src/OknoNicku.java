@@ -33,7 +33,6 @@ public class OknoNicku extends JFrame {
         setAlwaysOnTop(true);
         //setLocationRelativeTo(null);
         setVisible(true);
-        setBackground(new Color(102, 255, 102));
 
         JPanel glownyPanelNick = new JPanel();
         NickTextField = new JTextField();
@@ -42,10 +41,17 @@ public class OknoNicku extends JFrame {
 
         glownyPanelNick.setBackground(new Color(255, 153, 51));
 
-        NickTextField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        NickTextField.setFont(new Font("Tw Cen MT", Font.PLAIN, 24));
+        NickTextField.setForeground(new Color(168, 52, 235));
         NickTextField.setHorizontalAlignment(JTextField.CENTER);
+        NickTextField.setBackground(new Color(255, 175, 225));
 
         zatwierdzButton.setText("Zatwierdź");
+        zatwierdzButton.setFont(new Font("Tw Cen MT", Font.BOLD, 18));
+        zatwierdzButton.setForeground(new Color(168, 52, 235));
+        zatwierdzButton.setBackground(new Color(255, 175, 225));
+        zatwierdzButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
         zatwierdzButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 nick=NickTextField.getText();
@@ -56,7 +62,8 @@ public class OknoNicku extends JFrame {
             }
         });
 
-        podajNickLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18)); // NOI18N
+        podajNickLabel.setFont(new Font("Tw Cen MT", Font.PLAIN, 28));
+        podajNickLabel.setForeground(new Color(168, 52, 235));
         podajNickLabel.setHorizontalAlignment(SwingConstants.CENTER);
         podajNickLabel.setText("Podaj swój nick");
 
