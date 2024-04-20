@@ -36,7 +36,7 @@ Detrasher is an educational desktop game created in Java that allows players to 
 6. The game ends when the player runs out of chances, saving the score along with the nickname.
 
 
-![Gameplay](ReadmeImages/Detrasher.mp4)
+![Gameplay](Detrasher.mp4)
 
 ## Authors
 
