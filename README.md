@@ -21,10 +21,12 @@ Detrasher is an educational desktop game created in Java that allows players to 
 ## Getting Started
 
 ### Prerequisites
-
+Java Development Kit (JDK) installed on your computer.
 
 ### Installation
-
+1. Clone the repository to your local computer.
+2. Run the project in the Java Development Kit (JDK) environment.
+3. Run the Detrasher.java file to start the game.
 
 ## Gameplay Algorithm
 
