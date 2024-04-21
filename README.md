@@ -38,7 +38,11 @@ Java Development Kit (JDK) installed on your computer.
 6. The game ends when the player runs out of chances, saving the score along with the nickname.
 
 
-![Gameplay](Detrasher.mp4)
+![Default](ReadmeImages/Default.png)
+![Green Bottle](ReadmeImages/GreenBottle.png)
+![Pause](ReadmeImages/Pause.png)
+![About Game](ReadmeImages/AboutGame.png)
+![Score](ReadmeImages/Score.png)
 
 ## Authors
 
